@@ -3,4 +3,5 @@ All scripts related to Git and Github such as Repo creation and fork
 
 +### Contents
 +
-+- [Gitmanager](gitmanager.ps1)
++- Automate the Git Flow with [Gitmanager](gitmanager.ps1)
++- Some basic Git commands of [Git Python](gitpy.py)
