@@ -50,6 +50,6 @@ def pull():
 br = ''
 msg = 'gitpy branch function improved'
 # branch()
-commit(br=br, msg=msg)
+commit(msg=msg)
 
 print(f'\n{info}')
