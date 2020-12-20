@@ -24,19 +24,23 @@ def clone():
                       __user__ + "/" + __repo__ + ".git", local_path])
 
 
-def commit(br='master', msg=None):
+def commit(br=None, msg=None):
 
     commit_message = msg
-    if msg == None:
+    branch = br
+    if br == '':
+        branch = 'master'
+    if msg == '':
         commit_message = 'commit from gitpy.py'
 
     run('add', '.')
-    run("commit", "-am", commit_message)
+    # run("commit", "-am", commit_message)
     # run('push')
-    run("push", "-u", 'origin', br)
+    run("push", "-u", 'origin', branch)
+    # run("push", "-u", 'origin', branch, '--porcelain>>git.txt')
 
 
-def branch(br='master'):
+def branch(br):
 
     run("checkout", "-b", br)
 
@@ -45,11 +49,10 @@ def pull():
     run("pull")
 
 
-# cprint(figlet_format('Git-Commands', font='slant'), 'green')
-
 br = ''
-msg = 'gitpy branch function improved'
-# branch()
-commit(msg=msg)
+msg = 'shortcut zwischen linkem rechten Tab springen'
+# branch(br)
+commit(msg=msg, br=br)
 
-print(f'\n{info}')
+# cprint(figlet_format('Git-Commands', font='slant'), 'green')
+# print(f'\n{info}')

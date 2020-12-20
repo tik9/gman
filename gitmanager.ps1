@@ -1,11 +1,11 @@
 
-$cmd = 'status'
+# $cmd = 'status'
 # $cmd = 'pull'
 # $cmd = 'add .'
-# $cmd = 'commit -am "New Commit"'
+$cmd = 'commit -am "New Commit"'
 # $cmd = 'push'
 
-$verz = $prof_home, $zsh_cu
+$verz = $ph, $o
 
 # ================ end Setting
 
@@ -14,10 +14,10 @@ $cmdgro = $ti.totitlecase($cmd)
 # Exit
 
 Write-Host -ForegroundColor White "**** Start Gitman"
-Write-Host "`\n"
+# Write-Host "`\n"
 function gi_do ($git_rep) {
     Set-Location $git_rep.FullName
-    Write-Host "`\n"
+    # Write-Host "`\n"
     Write-Host -ForegroundColor White "[**** Git $cmdgro" $git_rep.fullname
     invoke-expression( "git $cmd")
 }
@@ -36,6 +36,7 @@ foreach ($elem in $verz) {
     # Write-Output $elem
     gi_do (Get-Item $elem)
 }
+
 Write-Host "`\n"
 Write-Host -ForegroundColor White "**** End Gitman"
 
