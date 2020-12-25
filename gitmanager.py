@@ -21,8 +21,8 @@ def main():
         if '.git' in dirs:
             if not(any(excl in root for excl in excludedirs)):
                 print(color.BOLD+root+color.END)
-                # chdir(root)
-                # run('status')
+                chdir(root)
+                run('status')
 
 
 def walklevel():
