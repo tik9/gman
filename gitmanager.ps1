@@ -3,14 +3,14 @@
 # $cmd = 'pull'
 # $cmd = 'add .'
 $cmd = 'commit -am "New Commit"'
-# $cmd = 'push'
+$cmd = 'push'
+$cmds='push','status'
 
 $verz = $ph, $o
 
 # ================ end Setting
 
 $ti = (Get-Culture).TextInfo
-$cmdgro = $ti.totitlecase($cmd)
 # Exit
 
 Write-Host -ForegroundColor White "**** Start Gitman"
@@ -18,8 +18,12 @@ Write-Host -ForegroundColor White "**** Start Gitman"
 function gi_do ($git_rep) {
     Set-Location $git_rep.FullName
     # Write-Host "`\n"
-    Write-Host -ForegroundColor White "[**** Git $cmdgro" $git_rep.fullname
-    invoke-expression( "git $cmd")
+    foreach ($cmd in $cmds) {
+        $cmdgro = $ti.totitlecase($cmd)
+        Write-Host -ForegroundColor White "[**** Git $cmdgro" $git_rep.fullname
+        
+        invoke-expression( "git $cmd")
+    }
 }
 
 $gd = Get-ChildItem $hw -exclude '.*' -directory
