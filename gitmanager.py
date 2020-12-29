@@ -32,7 +32,7 @@ def main():
             if not(any(excl in root for excl in excludedirs)):
                 print(color.BOLD+root+color.END)
                 # chdir(root)
-                # run('status')
+                run('pull')
 
 
 def walklevel():
