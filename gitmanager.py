@@ -4,6 +4,9 @@ from termcolor import cprint
 from os import chdir, listdir, path, scandir, walk
 
 homew = path.dirname(path.dirname(__file__))
+ohzsh = '.oh-my-zsh'
+setjson = 'C:/Users/User/AppData/Roaming/Code/User'
+# setjson='/home/tk/.config/code/User'
 
 
 def main():
@@ -11,18 +14,25 @@ def main():
     br = ''
     msg = 'commit from gitmanagerpy'
     # branch(br)
-    # commit(msg=msg, br=br)
+    commit(msg=msg, br=br)
 
-    # cprint(figlet_format('Git-Commands', font='slant'), 'green')
-    # print(f'\n{info}')
-    excludedirs = ['.oh-my-zsh', 'cv', 'doks', 'lt']
+    gitdirs = [f'{homew}/{ohzsh}/custom', setjson]
+
+    for dir in gitdirs:
+        # print(listdir(dir))
+        print(color.BOLD+dir+color.END)
+
+        chdir(dir)
+        # run('status')
+
+    excludedirs = [ohzsh, 'cv', 'doks', 'lt']
     for root, dirs, files in walklevel():
 
         if '.git' in dirs:
             if not(any(excl in root for excl in excludedirs)):
                 print(color.BOLD+root+color.END)
-                chdir(root)
-                run('status')
+                # chdir(root)
+                # run('status')
 
 
 def walklevel():
@@ -70,8 +80,6 @@ def commit(br=None, msg=None):
     run('add', '.')
     run("commit", "-am", commit_message)
     run('push')
-    # run("push", "-u", 'origin', branch)
-    # run("push", "-u", 'origin', branch, '--porcelain>>git.txt')
 
 
 def branch(br):
