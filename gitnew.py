@@ -1,79 +1,98 @@
-import settings
-import os
 from pathlib import Path
-from git import Repo
-
 import subprocess
 import sys
+from os import path
 
-settings.init()
-# sys.exit()
+home = path.dirname(path.dirname(__file__))
+settingsDir = path.join(home, 'tesseractToMarkdown')
+sys.path.append(settingsDir)
+from helper import gitFirstLevel
+from settings import color, custom, gitSpecialDirs, readme
 
-repo = 'git'
-repoShort = 'gt'
-cust = '.oh-my-zsh/custom'
-cap = os.path.join(settings.homew, cust, 'plugins/common-aliases.plugin.zsh')
-cf = os.path.join(cust, 'common_functions.zsh')
-pro = os.path.join(
-    settings.home, 'Documents/WindowsPowerShell/Microsoft.Powershell_profile.ps1')
+workspace = path.join(home, 'workspace1.code-workspace')
 
-dir = os.path.join(settings.homew, repo)
-Path(dir).mkdir(exist_ok=True)
-os.chdir(dir)
-readme = os.path.join(dir, 'README.md')
-# print(readme)
+user = 'tik9'
+repo = f'{user}.github.io'
+local_path = path.join(home, 'ghpage')
 
-# if not os.path.exists(readme):os.mknod(readme)
 
-repoCapital = dir.capitalize()
+def main():
+    aliase()
+    # clone()
+    # Path(dir).mkdir(exist_ok=True)
 
-# print('listdir',os.listdir())
-description = 'All scripts related to Git and Github such as Repo creation and fork'
+    description = 'Jekyll Use in Github Pages'
+    repoCapital = repo.capitalize()
+    # str = prepWorkspace()
+    str = addWorkspace()
+    # print(str)
 
-# with open(readme, 'w', encoding='utf8'):pass
-# with open(readme, 'w', encoding='utf8') as f:
-    # f.write(f'## {repoCapital}\n{description}')
-# for line in f:print(f)
-# with open(cf, 'a', encoding='utf8') as f:f.write(f'function {repoShort} { cd ${reposhort} }')
-# with open(cap, 'a', encoding='utf8') as f:f.write(f'{repoShort}=${dir})
-# with open(pro, 'a', encoding='utf8') as f:f.write(f'\n${repoShort}="$hw/{repo}"')
+    # with open(workspace,'w') as f:f.write(str)
 
-# gi = git.cmd.Git(dir)
-# gi.pull()
-# gi.add('-A')
-# grepo.git.commit('- m','first commit')
-# git remote add origin 'https://github.com/tik9/'+repo+'.git
-# git push - u origin master
+    # with open(path.join(local_path,readme), 'w') as f:
+    # f.write(f'## {repo.capitalize()}\n\n<br>{description}')
 
-# print('curdir', os.listdir(os.getcwd()))
-# print('dir', dir)
+
+def clone():
+    subprocess.Popen(['git', 'clone', "https://github.com/" +
+                      user + "/" + repo + ".git", local_path])
+
+
+def prepWorkspace():
+    str = '{\n'
+    str += '"folders":[\n'
+    gitSpecialDirs.extend(gitFirstLevel())
+    for dir in gitSpecialDirs:
+        str += f'{{"path":"{dir}"}},'
+
+    str += ']}'
+    return str
+    # with open(workspace, 'w') as f:f.write(str)
+
+
+def addWorkspace():
+    str = ''
+    with open(workspace, 'r') as f:
+        for line in f:
+            if 'folders' in line:
+                str += f'{line}{{\n"path": "{local_path}"\n}},'
+            else:
+                str += line
+    return str
 
 
 def print_commit(commit):
-    print('--')
-    print(str(commit.hexsha))
-    print(
-        f"Message: {commit.summary},{commit.author.name}, {commit.author.email}")
-    print(f'{commit.authored_datetime:%Y-%m-%d}')
-    print(f"count commit: {commit.count()},size: {commit.size}")
+    str += '--'
+    str += str(commit.hexsha)
+    str += f"Message: {commit.summary},{commit.author.name}, {commit.author.email}"
+    str += f'{commit.authored_datetime:%Y-%m-%d}'
+    str += f"count commit: {commit.count()},size: {commit.size}"
+    return str
 
 
 def print_repository(repo):
-    print(f'Repo description: {repo.description}')
-    print(f'Repo active branch: {repo.active_branch}')
+    str += f'Repo description: {repo.description}'
+    str += f'Repo active branch: {repo.active_branch}'
     for remote in repo.remotes:
-        print(f'Remote named with URL: {remote}, {remote.url}')
-    print(f'Last commit is {repo.head.commit.hexsha}')
+        str += f'Remote named with URL: {remote}, {remote.url}'
+    str += f'Last commit is {repo.head.commit.hexsha}'
+    return str
 
 
-# if __name__ == "__main__":
-#     repo_path = os.getcwd()
-#     repo = Repo(repo_path)
-#     if not repo.bare:
-#         print(f'Repo successfully loaded. {repo_path}')
-#         print_repository(repo)
-#         commits = list(repo.iter_commits('master'))[:5]
-#         for commit in commits:
-#             print_commit(commit)
-#     else:
-#         print('Could not load repository at {repo_path}')
+def aliase():
+    repoShort = 'gh'
+    cap = path.join(custom, 'plugins/common-aliases/common-aliases.plugin.zsh')
+    cf = path.join(custom, 'common_functions.zsh')
+    # pro = path.join(home, 'Documents/WindowsPowerShell/Microsoft.Powershell_profile.ps1')
+    # with open(cap, 'a',) as f:f.write(f'\n{repoShort}=$HOME/{repoShort')
+
+    with open(cf, 'a', encoding='utf8') as f:
+       f.write(f'\nfunction {repoShort} {{ cd ${repoShort} }}')
+
+    with open(cf, 'r') as f:print(f.read())
+
+    # with open(pro, 'a', encoding='utf8') as f:f.write(f'\n${repoShort}="$hw/{repo}"')
+
+
+if __name__ == "__main__":
+    main()
