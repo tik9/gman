@@ -11,20 +11,24 @@ from settings import color, custom, gitSpecialDirs, readme
 
 workspace = path.join(home, 'workspace1.code-workspace')
 
-user = 'tik9'
-repo = f'{user}.github.io'
-local_path = path.join(home, 'ghpage')
+github = 'https://github.com'
+
+# user = 'MichaelCurrin'
+# repo = 'my-github-projects'
+
+# local_path = path.join(home, repo)
 
 
 def main():
-    aliase()
+    # aliase()
     # clone()
     # Path(dir).mkdir(exist_ok=True)
 
     description = 'Jekyll Use in Github Pages'
-    repoCapital = repo.capitalize()
+    # repoCapital = repo.capitalize()
     # str = prepWorkspace()
-    str = addWorkspace()
+    # str = addWorkspace()
+    fork()
     # print(str)
 
     # with open(workspace,'w') as f:f.write(str)
@@ -33,9 +37,21 @@ def main():
     # f.write(f'## {repo.capitalize()}\n\n<br>{description}')
 
 
+def fork():
+    # repogit = f'{github}/{user}/{repo}'
+    repogit = 'https://g/M/m'
+    # user, repo, t,v = repogit.split('/')
+    # print(user[1])
+    gihu, user, repo = repogit.rsplit('/', 2)
+    print(gihu, user, repo)
+
+    # git remote add upstream repoMaintainer
+    # git pull upstream master
+
+
 def clone():
-    subprocess.Popen(['git', 'clone', "https://github.com/" +
-                      user + "/" + repo + ".git", local_path])
+    subprocess.Popen(['git', 'clone', github + '/' +
+                      user + '/' + repo + '.git', local_path])
 
 
 def prepWorkspace():
@@ -87,9 +103,10 @@ def aliase():
     # with open(cap, 'a',) as f:f.write(f'\n{repoShort}=$HOME/{repoShort')
 
     with open(cf, 'a', encoding='utf8') as f:
-       f.write(f'\nfunction {repoShort} {{ cd ${repoShort} }}')
+        f.write(f'\nfunction {repoShort} {{ cd ${repoShort} }}')
 
-    with open(cf, 'r') as f:print(f.read())
+    with open(cf, 'r') as f:
+        print(f.read())
 
     # with open(pro, 'a', encoding='utf8') as f:f.write(f'\n${repoShort}="$hw/{repo}"')
 

@@ -14,6 +14,7 @@ def main():
 
     br = ''
     msg = 'commit from gitmanagerpy'
+    # msg = 'python data cleaning !!NEW!!'
     # branch(br)
     # commit(msg=msg, br=br)
 
@@ -24,18 +25,20 @@ def main():
     # run('pull')
     gitSpecialDirs.extend(gitFirstLevel())
     for dir in gitSpecialDirs:
+        # pass
         print(color.BOLD + dir + color.END)
         chdir(dir)
         # run('pull')
         # run('status')
         # run ('remote','update')
         commit(msg=msg, br=br)
-    print(f'{color.UNDERLINE}End')
+    print(f'{color.UNDERLINE}End{color.END}')
+
 
 
 def run(*args):
-    # return subprocess.check_call(['git'] + list(args))
-    return subprocess.Popen(['git'] + list(args))
+    return subprocess.check_call(['git'] + list(args))
+    # return subprocess.Popen(['git'] + list(args))
 
 
 def commit(br=None, msg=None):
