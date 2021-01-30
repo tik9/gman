@@ -35,6 +35,7 @@ def sev_repos():
     custom = path.join(home_script, '.oh-my-zsh', 'custom')
 
     gitSpecialDirs = [powershell]
+    gitSpecialDirs = []
     gitSpecialDirs.extend(gitFirstLevel())
     for dir in gitSpecialDirs:
         # pass
@@ -60,8 +61,8 @@ def walklevel():
 def gitFirstLevel():
     slist = []
     excludedirs = ['.oh-my-zsh', 'doks', 'git']
-    excludedirs = ['.oh-my-zsh', 'doks', 'lt', 'cv', 'further-skill-tests',
-                   'ghpage', 'my-github-projects', 'ml', 'pluralsight-skill-tests']
+    excludedirs = ['.oh-my-zsh', 'doks', 'cv', 'further-skill-tests',
+                   'ghpage', 'my-github-projects', 'ml', 'pluralsight-skill-tests', 'in-quiz-questions']
 
     for root, dirs, files in walklevel():
 
