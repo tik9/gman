@@ -38,6 +38,7 @@ def sev_repos():
     git_special_dirs = []
     git_special_dirs.extend(git_first_level())
     for dir in git_special_dirs:
+
         # pass
         print(color.BOLD + dir + color.END)
         chdir(dir)
@@ -47,6 +48,30 @@ def sev_repos():
         commit()
     print(f'{color.BOLD}End{color.END}')
 
+
+def walklevel():
+    num_sep = home_script.count(path.sep)
+    for root, dirs, files in walk(home_script):
+        yield root, dirs, files
+        dirs.sort()
+        num_sep_this = root.count(path.sep)
+        if num_sep + 1 <= num_sep_this:
+            del dirs[:]
+
+
+def gitFirstLevel():
+    slist = []
+    excludedirs = ['.oh-my-zsh', 'doks', 'git']
+    excludedirs = ['.oh-my-zsh', 'doks', 'cv', 'further-skill-tests',
+                   'ghpage', 'my-github-projects', 'ml', 'pluralsight-skill-tests', 'in-quiz-questions']
+
+    for root, dirs, files in walklevel():
+
+        if '.git' in dirs:
+            if not(any(excl in root for excl in excludedirs)):
+                # print(color.BOLD+root+color.END)
+                slist.append(root)
+    return slist
 
 def walklevel():
     num_sep = home_script.count(path.sep)
