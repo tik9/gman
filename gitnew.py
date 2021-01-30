@@ -1,7 +1,7 @@
 from pathlib import Path
 import subprocess
 import sys
-from os import path
+from os import path,chdir
 
 home = path.dirname(path.dirname(__file__))
 settingsDir = path.join(home, 'tesseractToMarkdown')
@@ -11,12 +11,17 @@ from settings import color, custom, gitSpecialDirs, readme
 
 workspace = path.join(home, 'workspace1.code-workspace')
 
-github = 'https://github.com'
+github_maintain = 'https://github.com/Ebazhanov/in-quiz-questions'
+github_maintain = 'git@github.com:Ebazhanov/in-quiz-questions.git'
+delimiter=':'
+delimiter_slash='/'
+github_split=github_maintain.replace(delimiter,delimiter_slash)
+gith, user, repo = github_split.rsplit(delimiter_slash, 2)
+user='tik9'
+local_path = path.join(home, 'lt')
 
 # user = 'MichaelCurrin'
 # repo = 'my-github-projects'
-
-# local_path = path.join(home, repo)
 
 
 def main():
@@ -39,19 +44,17 @@ def main():
 
 def fork():
     # repogit = f'{github}/{user}/{repo}'
-    repogit = 'https://g/M/m'
-    # user, repo, t,v = repogit.split('/')
     # print(user[1])
-    gihu, user, repo = repogit.rsplit('/', 2)
-    print(gihu, user, repo)
+    # print(gith, user, repo)
+    chdir(local_path)
+    # clone()
 
-    # git remote add upstream repoMaintainer
-    # git pull upstream master
+    # subprocess.check_call(['git','remote','add','upstream',github_maintain])
+    subprocess.check_call(['git', 'pull', 'upstream', 'master'])
 
 
 def clone():
-    subprocess.Popen(['git', 'clone', github + '/' +
-                      user + '/' + repo + '.git', local_path])
+    subprocess.check_call(['git', 'clone', f'{gith}{delimiter}{user}/{repo}', local_path])
 
 
 def prepWorkspace():
