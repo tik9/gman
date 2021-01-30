@@ -34,10 +34,10 @@ def sev_repos():
     user = path.join(home_w, 'AppData/Roaming', user_code)
     custom = path.join(home_script, '.oh-my-zsh', 'custom')
 
-    gitSpecialDirs = [powershell]
-    gitSpecialDirs = []
-    gitSpecialDirs.extend(gitFirstLevel())
-    for dir in gitSpecialDirs:
+    git_special_dirs = [powershell]
+    git_special_dirs = []
+    git_special_dirs.extend(git_first_level())
+    for dir in git_special_dirs:
         # pass
         print(color.BOLD + dir + color.END)
         chdir(dir)

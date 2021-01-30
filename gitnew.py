@@ -2,13 +2,9 @@ from pathlib import Path
 import subprocess
 import sys
 from os import path,chdir
+from gitmanager import git_first_level
 
-home = path.dirname(path.dirname(__file__))
-settingsDir = path.join(home, 'tesseractToMarkdown')
-sys.path.append(settingsDir)
-from helper import gitFirstLevel
-from settings import color, custom, gitSpecialDirs, readme
-
+home =path.dirname(path.dirname(__file__)
 workspace = path.join(home, 'workspace1.code-workspace')
 
 github_maintain = 'https://github.com/Ebazhanov/in-quiz-questions'
@@ -60,8 +56,10 @@ def clone():
 def prepWorkspace():
     str = '{\n'
     str += '"folders":[\n'
-    gitSpecialDirs.extend(gitFirstLevel())
-    for dir in gitSpecialDirs:
+    git_special_dirs=[]
+    
+    git_special_dirs.extend(git_first_level())
+    for dir in git_special_dirs:
         str += f'{{"path":"{dir}"}},'
 
     str += ']}'
