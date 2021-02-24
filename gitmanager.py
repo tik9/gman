@@ -15,7 +15,21 @@ class color:
     UNDERLINE = '\033[4m'
     END = '\033[0m'
 
+config = '.config'
+powershell = path.join(home_script, config, 'powershell')
+powershell = path.join(home_w, 'documents', 'windowspowershell')
+user_code = 'Code/User'
+user = path.join(home_script, config, user_code)
+user = path.join(home_w, 'AppData/Roaming', user_code)
+custom = path.join(home_script, '.oh-my-zsh', 'custom')
 
+excludedirs = ['.oh-my-zsh', 'doks', 'git']
+# excludedirs = ['.oh-my-zsh', 'doks', 'cv', 'further-skill-tests','ghpage', 'my-github-projects', 'ml', 'pluralsight-skill-tests', 'in-quiz-questions']
+
+git_special_dirs = [powershell,custom]
+git_special_dirs = []
+    
+    
 def main():
 
     br = ''
@@ -26,27 +40,19 @@ def main():
 
 
 def sev_repos():
-    config = '.config'
-    powershell = path.join(home_script, config, 'powershell')
-    powershell = path.join(home_w, 'documents', 'windowspowershell')
-    user_code = 'Code/User'
-    user = path.join(home_script, config, user_code)
-    user = path.join(home_w, 'AppData/Roaming', user_code)
-    custom = path.join(home_script, '.oh-my-zsh', 'custom')
 
-    git_special_dirs = [powershell]
-    git_special_dirs = []
     git_special_dirs.extend(git_first_level())
+
     for dir in git_special_dirs:
 
         # pass
-        print(color.BOLD + dir + color.END)
+        print(color.BOLD,dir,color.END)
         chdir(dir)
         # run('pull')
-        # run('status')
+        run('status')
         # run ('remote','update')
-        commit()
-    print(f'{color.BOLD}End{color.END}')
+        # commit()
+    print(color.BOLD,'End',color.END)
 
 
 def walklevel():
@@ -59,35 +65,11 @@ def walklevel():
             del dirs[:]
 
 
-def gitFirstLevel():
+def git_first_level():
     slist = []
-    excludedirs = ['.oh-my-zsh', 'doks', 'git']
-    excludedirs = ['.oh-my-zsh', 'doks', 'cv', 'further-skill-tests',
-                   'ghpage', 'my-github-projects', 'ml', 'pluralsight-skill-tests', 'in-quiz-questions']
-
-    for root, dirs, files in walklevel():
-
-        if '.git' in dirs:
-            if not(any(excl in root for excl in excludedirs)):
-                # print(color.BOLD+root+color.END)
-                slist.append(root)
-    return slist
-
-def walklevel():
-    num_sep = home_script.count(path.sep)
-    for root, dirs, files in walk(home_script):
-        yield root, dirs, files
-        dirs.sort()
-        num_sep_this = root.count(path.sep)
-        if num_sep + 1 <= num_sep_this:
-            del dirs[:]
-
-
-def gitFirstLevel():
-    slist = []
-    excludedirs = ['.oh-my-zsh', 'doks', 'git']
-    excludedirs = ['.oh-my-zsh', 'doks', 'cv', 'further-skill-tests',
-                   'ghpage', 'my-github-projects', 'ml', 'pluralsight-skill-tests', 'in-quiz-questions']
+    excludedirs = ['.oh-my-zsh', 'doks', 'cv','lt','psrandom','posh-git']
+    # excludedirs = ['.oh-my-zsh', 'doks', 'cv', 'further-skill-tests',
+                #    '', 'ml', 'pluralsight-skill-tests', 'lt']
 
     for root, dirs, files in walklevel():
 
@@ -115,7 +97,7 @@ def commit(br=None, msg=None):
     print(commit_message)
 
     run('add', '.')
-    run("commit", "-am", commit_message)
+    run('commit', '-am', commit_message)
     run('push')
 
 
@@ -124,5 +106,5 @@ def branch(br):
     run('checkout', '-b', br)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

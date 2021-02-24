@@ -1,23 +1,22 @@
 from pathlib import Path
 import subprocess
 import sys
-from os import path,chdir
-from gitmanager import git_first_level
+from os import path, chdir, listdir
+from gitmanager import git_first_level, git_special_dirs
 
-home =path.dirname(path.dirname(__file__)
+
+home = path.dirname(path.dirname(__file__))
+
 workspace = path.join(home, 'workspace1.code-workspace')
 
-github_maintain = 'https://github.com/Ebazhanov/in-quiz-questions'
-github_maintain = 'git@github.com:Ebazhanov/in-quiz-questions.git'
-delimiter=':'
-delimiter_slash='/'
-github_split=github_maintain.replace(delimiter,delimiter_slash)
-gith, user, repo = github_split.rsplit(delimiter_slash, 2)
-user='tik9'
-local_path = path.join(home, 'lt')
 
-# user = 'MichaelCurrin'
-# repo = 'my-github-projects'
+github_maintain = ''
+github_maintain = 'https://github.com/tik9/tik9.github.io'
+
+gith, user, repo = github_maintain.rsplit('/', 2)
+# user = 'tik9'
+
+local_path = path.join(home, repo)
 
 
 def main():
@@ -26,45 +25,48 @@ def main():
     # Path(dir).mkdir(exist_ok=True)
 
     description = 'Jekyll Use in Github Pages'
-    # repoCapital = repo.capitalize()
+
+    # with open(workspace, 'r') as f:for line in f:print(line)
+
     # str = prepWorkspace()
-    # str = addWorkspace()
-    fork()
+
+    str = addWorkspace()
     # print(str)
+    with open(workspace,'w') as f:f.write(str)
 
-    # with open(workspace,'w') as f:f.write(str)
+    # fork()
 
+    # repoCapital = repo.capitalize()
     # with open(path.join(local_path,readme), 'w') as f:
     # f.write(f'## {repo.capitalize()}\n\n<br>{description}')
 
 
 def fork():
-    # repogit = f'{github}/{user}/{repo}'
-    # print(user[1])
     # print(gith, user, repo)
-    chdir(local_path)
-    # clone()
+    chdir(home)
+    clone()
 
     # subprocess.check_call(['git','remote','add','upstream',github_maintain])
-    subprocess.check_call(['git', 'pull', 'upstream', 'master'])
+    # subprocess.check_call(['git', 'pull', 'upstream', 'master'])
 
 
 def clone():
-    subprocess.check_call(['git', 'clone', f'{gith}{delimiter}{user}/{repo}', local_path])
+    str = f'{gith}/{user}/{repo}'
+    # print(str)
+    subprocess.check_call(['git', 'clone', str, local_path])
 
 
 def prepWorkspace():
     str = '{\n'
     str += '"folders":[\n'
-    git_special_dirs=[]
-    
+
     git_special_dirs.extend(git_first_level())
+
     for dir in git_special_dirs:
         str += f'{{"path":"{dir}"}},'
 
     str += ']}'
     return str
-    # with open(workspace, 'w') as f:f.write(str)
 
 
 def addWorkspace():
@@ -72,7 +74,7 @@ def addWorkspace():
     with open(workspace, 'r') as f:
         for line in f:
             if 'folders' in line:
-                str += f'{line}{{\n"path": "{local_path}"\n}},'
+                str += f'{line}{{\n"path": "{repo}"\n}},'
             else:
                 str += line
     return str
