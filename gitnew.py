@@ -11,7 +11,7 @@ workspace = path.join(home, 'workspace1.code-workspace')
 
 
 github_maintain = ''
-github_maintain = 'https://github.com/tik9/tik9.github.io'
+github_maintain = 'https://github.com/tik9/game'
 
 gith, user, repo = github_maintain.rsplit('/', 2)
 # user = 'tik9'
@@ -24,21 +24,32 @@ def main():
     # clone()
     # Path(dir).mkdir(exist_ok=True)
 
-    description = 'Jekyll Use in Github Pages'
+    description = 'Game Dev in Javascript'
 
-    # with open(workspace, 'r') as f:for line in f:print(line)
+    # with open(workspace, 'r') as f:print(f.read())
 
-    # str = prepWorkspace()
-
-    str = addWorkspace()
+    # str = add_workspace()
     # print(str)
-    with open(workspace,'w') as f:f.write(str)
+    # with open(workspace,'w') as f:f.write(str)
 
     # fork()
 
     # repoCapital = repo.capitalize()
     # with open(path.join(local_path,readme), 'w') as f:
     # f.write(f'## {repo.capitalize()}\n\n<br>{description}')
+
+
+def new_repo():
+
+    headers = {
+        'Authorization': 'token e5f9a4b83b05d4fa8e552d4aef7bd29f6af30103',
+    }
+
+    data = '{"name":''}'
+
+    response = requests.post(
+        'https://api.github.com/user/repos', headers=headers, data=data)
+    return response
 
 
 def fork():
@@ -52,11 +63,11 @@ def fork():
 
 def clone():
     str = f'{gith}/{user}/{repo}'
-    # print(str)
+    # print(local_path)
     subprocess.check_call(['git', 'clone', str, local_path])
 
 
-def prepWorkspace():
+def prep_workspace():
     str = '{\n'
     str += '"folders":[\n'
 
@@ -69,7 +80,7 @@ def prepWorkspace():
     return str
 
 
-def addWorkspace():
+def add_workspace():
     str = ''
     with open(workspace, 'r') as f:
         for line in f:
