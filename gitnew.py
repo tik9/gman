@@ -1,3 +1,5 @@
+# https://stackoverflow.com/jobs/447895/database-reliability-engineer-the-remote-company
+
 from pathlib import Path
 import subprocess
 import sys
@@ -5,47 +7,49 @@ from os import path, chdir, listdir
 from gitmanager import git_first_level, git_special_dirs
 
 
-home = path.dirname(path.dirname(__file__))
+home = path.dirname(path.dirname(path.abspath(__file__)))
 
 workspace = path.join(home, 'workspace1.code-workspace')
 
-
-github_maintain = ''
-github_maintain = 'https://github.com/tik9/game'
+# github_maintain = 'https://github.com/tik9/bewerbung.git'
+github_maintain='git@192.168.178.36:/gt/bewerbung.git'
 
 gith, user, repo = github_maintain.rsplit('/', 2)
-# user = 'tik9'
 
 local_path = path.join(home, repo)
 
 
 def main():
-    # aliase()
     # clone()
-    # Path(dir).mkdir(exist_ok=True)
 
-    description = 'Game Dev in Javascript'
-
-    # with open(workspace, 'r') as f:print(f.read())
+    # description = 'Game Dev in Javascript'
 
     # str = add_workspace()
     # print(str)
-    # with open(workspace,'w') as f:f.write(str)
 
-    # fork()
-
-    # repoCapital = repo.capitalize()
+    pull_new()
     # with open(path.join(local_path,readme), 'w') as f:
-    # f.write(f'## {repo.capitalize()}\n\n<br>{description}')
+
+def pull_new():
+    # subprocess.check_call(['git', 'init'])
+    # subprocess.check_call(['git','remote','add','origin',github_maintain])
+    subprocess.check_call(['git', 'pull', 'origin', 'master'])
+
+
+def clone():
+    str_ = f'{gith}/{user}/{repo}'
+    # print(str_)
+    # print(local_path)
+    subprocess.check_call(['git', 'clone', str_, local_path])
 
 
 def new_repo():
 
     headers = {
-        'Authorization': 'token e5f9a4b83b05d4fa8e552d4aef7bd29f6af30103',
+        'Authorization': 'token <token>',
     }
 
-    data = '{"name":''}'
+    data = '{"name":"<name>","description": "<message>"}'
 
     response = requests.post(
         'https://api.github.com/user/repos', headers=headers, data=data)
@@ -59,12 +63,6 @@ def fork():
 
     # subprocess.check_call(['git','remote','add','upstream',github_maintain])
     # subprocess.check_call(['git', 'pull', 'upstream', 'master'])
-
-
-def clone():
-    str = f'{gith}/{user}/{repo}'
-    # print(local_path)
-    subprocess.check_call(['git', 'clone', str, local_path])
 
 
 def prep_workspace():
@@ -90,23 +88,6 @@ def add_workspace():
                 str += line
     return str
 
-
-def print_commit(commit):
-    str += '--'
-    str += str(commit.hexsha)
-    str += f"Message: {commit.summary},{commit.author.name}, {commit.author.email}"
-    str += f'{commit.authored_datetime:%Y-%m-%d}'
-    str += f"count commit: {commit.count()},size: {commit.size}"
-    return str
-
-
-def print_repository(repo):
-    str += f'Repo description: {repo.description}'
-    str += f'Repo active branch: {repo.active_branch}'
-    for remote in repo.remotes:
-        str += f'Remote named with URL: {remote}, {remote.url}'
-    str += f'Last commit is {repo.head.commit.hexsha}'
-    return str
 
 
 def aliase():
