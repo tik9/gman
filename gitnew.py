@@ -1,22 +1,22 @@
-# https://stackoverflow.com/jobs/447895/database-reliability-engineer-the-remote-company
-
 from pathlib import Path
 import subprocess
 import sys
 from os import path, chdir, listdir
 from gitmanager import git_first_level, git_special_dirs
+from pathlib import Path
 
+home_w = path.dirname(path.dirname(path.abspath(__file__)))
+home = str(Path.home())
 
-home = path.dirname(path.dirname(path.abspath(__file__)))
+workspace = path.join(home_w, 'workspace1.code-workspace')
 
-workspace = path.join(home, 'workspace1.code-workspace')
+# url = 'https://github.com/tik9/game'
+url = 'git@192.168.178.36:/gt/bewerbung'
 
-# github_maintain = 'https://github.com/tik9/bewerbung.git'
-github_maintain='git@192.168.178.36:/gt/bewerbung.git'
+# base, user, repo = url.rsplit('/', 2)
+repo = url.rsplit('/', 1)[1]
 
-gith, user, repo = github_maintain.rsplit('/', 2)
-
-local_path = path.join(home, repo)
+local_path = path.join(home, 'downloads', 'PortableJekyll-master', repo)
 
 
 def main():
@@ -24,23 +24,32 @@ def main():
 
     # description = 'Game Dev in Javascript'
 
-    # str = add_workspace()
-    # print(str)
+    str_ = add_workspace()
+    # print(str_)
+    with open(workspace, 'w') as f:f.write(str_)
 
-    pull_new()
-    # with open(path.join(local_path,readme), 'w') as f:
 
-def pull_new():
-    # subprocess.check_call(['git', 'init'])
-    # subprocess.check_call(['git','remote','add','origin',github_maintain])
-    subprocess.check_call(['git', 'pull', 'origin', 'master'])
+def add_workspace():
+    str = ''
+    with open(workspace, 'r') as f:
+        for line in f:
+            if 'folders' in line:
+                str += f'{line}{{\n"path": "{local_path}"\n}},'
+            else:
+                str += line
+    return str
 
 
 def clone():
-    str_ = f'{gith}/{user}/{repo}'
-    # print(str_)
+    # print(url, local_path)
     # print(local_path)
-    subprocess.check_call(['git', 'clone', str_, local_path])
+    subprocess.check_call(['git', 'clone', url, local_path])
+
+
+def pull_new():
+    # subprocess.check_call(['git', 'init'])
+    # subprocess.check_call(['git','remote','add','origin',url])
+    subprocess.check_call(['git', 'pull', 'origin', 'master'])
 
 
 def new_repo():
@@ -61,7 +70,7 @@ def fork():
     chdir(home)
     clone()
 
-    # subprocess.check_call(['git','remote','add','upstream',github_maintain])
+    # subprocess.check_call(['git','remote','add','upstream',url])
     # subprocess.check_call(['git', 'pull', 'upstream', 'master'])
 
 
@@ -76,18 +85,6 @@ def prep_workspace():
 
     str += ']}'
     return str
-
-
-def add_workspace():
-    str = ''
-    with open(workspace, 'r') as f:
-        for line in f:
-            if 'folders' in line:
-                str += f'{line}{{\n"path": "{repo}"\n}},'
-            else:
-                str += line
-    return str
-
 
 
 def aliase():
