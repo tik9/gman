@@ -2,19 +2,24 @@ from pathlib import Path
 import subprocess
 import sys
 from os import path, chdir, listdir
-from gitmanager import git_first_level, git_special_dirs
+from gmanager import git_first_level, git_special_dirs
 from pathlib import Path
+import requests
+
 
 home_w = path.dirname(path.dirname(path.abspath(__file__)))
 home = str(Path.home())
 
 workspace = path.join(home_w, 'workspace1.code-workspace')
 
-# url = 'https://github.com/tik9/game'
-url = 'git@192.168.178.36:/gt/bewerbung'
+url = 'git@github.com/tik9/'
+# url = 'git@192.168.178.36:/gt/bewerbung'
+url_api='https://api.github.com/user/repos'
+repo='rest-app'
+# print(repo)
+repo = url.rsplit('/', 1)[1]
 
 # base, user, repo = url.rsplit('/', 2)
-repo = url.rsplit('/', 1)[1]
 
 local_path = path.join(home, 'downloads', 'PortableJekyll-master', repo)
 
@@ -24,9 +29,24 @@ def main():
 
     # description = 'Game Dev in Javascript'
 
-    str_ = add_workspace()
+    # str_ = add_workspace()
     # print(str_)
-    with open(workspace, 'w') as f:f.write(str_)
+    # with open(workspace, 'w') as f:f.write(str_)
+    print(new_repo())
+
+
+def new_repo():
+
+    headers = {
+        'Authorization': 'token 64b3fa5a89bdc2f84348300e98ae987baa30bb2d',
+    }
+
+    data = '{"name": "rest-app","description": "A react application"}'
+
+    response = requests.post(
+        url_api, headers=headers, data=data)
+    return response
+
 
 
 def add_workspace():
@@ -50,19 +70,6 @@ def pull_new():
     # subprocess.check_call(['git', 'init'])
     # subprocess.check_call(['git','remote','add','origin',url])
     subprocess.check_call(['git', 'pull', 'origin', 'master'])
-
-
-def new_repo():
-
-    headers = {
-        'Authorization': 'token <token>',
-    }
-
-    data = '{"name":"<name>","description": "<message>"}'
-
-    response = requests.post(
-        'https://api.github.com/user/repos', headers=headers, data=data)
-    return response
 
 
 def fork():

@@ -1,14 +1,11 @@
 import subprocess
-# from pyfiglet import figlet_format
-# from termcolor import cprint
 from os import chdir, listdir, path, scandir, walk
 import sys
 from pathlib import Path
 
 
 home_w = str(Path.home())
-home_script = path.dirname(path.dirname(__file__))
-
+home_script = path.dirname(path.dirname(path.abspath(__file__)))
 
 class color:
     BOLD = '\033[1m'
@@ -17,17 +14,18 @@ class color:
 
 config = '.config'
 powershell = path.join(home_script, config, 'powershell')
-powershell = path.join(home_w, 'documents', 'windowspowershell')
+# print(home_script)
+
+# powershell = path.join(home_w, 'documents', 'windowspowershell')
 user_code = 'Code/User'
 user = path.join(home_script, config, user_code)
-user = path.join(home_w, 'AppData/Roaming', user_code)
+# user = path.join(home_w, 'AppData/Roaming', user_code)
 custom = path.join(home_script, '.oh-my-zsh', 'custom')
 
-excludedirs = ['.oh-my-zsh', 'doks', 'git']
-# excludedirs = ['.oh-my-zsh', 'doks', 'cv', 'further-skill-tests','ghpage', 'my-github-projects', 'ml', 'pluralsight-skill-tests', 'in-quiz-questions']
+excludedirs = ['.oh-my-zsh', 'git']
 
 git_special_dirs = [powershell,custom]
-git_special_dirs = []
+# git_special_dirs = []
     
     
 def main():
@@ -43,14 +41,14 @@ def sev_repos():
 
     git_special_dirs.extend(git_first_level())
 
-    for dir in git_special_dirs:
+    for dir_ in git_special_dirs:
 
         # pass
-        print(color.BOLD,dir,color.END)
-        chdir(dir)
-        # run('pull')
-        run('status')
-        # run ('remote','update')
+        print(color.BOLD,dir_,color.END)
+        chdir(dir_)
+        run('pull')
+        # run('status')
+        # run ('remote','-v')
         # commit()
     print(color.BOLD,'End',color.END)
 
@@ -67,9 +65,6 @@ def walklevel():
 
 def git_first_level():
     slist = []
-    excludedirs = ['.oh-my-zsh', 'doks', 'cv','lt','psrandom','posh-git']
-    # excludedirs = ['.oh-my-zsh', 'doks', 'cv', 'further-skill-tests',
-                #    '', 'ml', 'pluralsight-skill-tests', 'lt']
 
     for root, dirs, files in walklevel():
 
