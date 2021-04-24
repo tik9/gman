@@ -2,62 +2,72 @@ from pathlib import Path
 import subprocess
 import sys
 from os import path, chdir, listdir
-from gmanager import git_first_level, git_special_dirs
+from gmanager import calculator, game, git_first_level, git_special_dirs, home_w, rest_test
 from pathlib import Path
 import requests
+from itertools import islice
 
 
-home_w = path.dirname(path.dirname(path.abspath(__file__)))
 home = str(Path.home())
 
+repo = 'react-app'
 workspace = path.join(home_w, 'workspace1.code-workspace')
 
-url = 'git@github.com/tik9/'
-# url = 'git@192.168.178.36:/gt/bewerbung'
-url_api='https://api.github.com/user/repos'
-repo='rest-app'
-# print(repo)
-repo = url.rsplit('/', 1)[1]
-
+# url_api = 'https://api.github.com/user/repos'
+# home_w = home_w.split('\\\\')[1]
+# url='git@192.168.178.36:/gt/'
+url = 'git@github.com:tik9/'
+# url = 'https://github.com/tik9/'
+url = path.join(url, repo)
+# print(url)
 # base, user, repo = url.rsplit('/', 2)
 
-local_path = path.join(home, 'downloads', 'PortableJekyll-master', repo)
+# local_path = repo
+local_path = path.join(home, repo).replace('\\', '/')
+# print(local_path)
 
 
 def main():
+    str_ = ''
     # clone()
-
+    # remote_add()
     # description = 'Game Dev in Javascript'
 
-    # str_ = add_workspace()
+    str_ = ch_workspace(True)
     # print(str_)
-    # with open(workspace, 'w') as f:f.write(str_)
-    print(new_repo())
+    with open(workspace, 'w') as file_:file_.write(str_)
+    # print(new_repo())
 
 
-def new_repo():
-
-    headers = {
-        'Authorization': 'token 64b3fa5a89bdc2f84348300e98ae987baa30bb2d',
-    }
-
-    data = '{"name": "rest-app","description": "A react application"}'
-
-    response = requests.post(
-        url_api, headers=headers, data=data)
-    return response
-
-
-
-def add_workspace():
+def ch_workspace(rm=False):
     str = ''
-    with open(workspace, 'r') as f:
-        for line in f:
+    next_line_rm = False
+    with open(workspace, 'r') as file_:
+        # head = list(islice(file_, 8))
+
+        for line in file_:
             if 'folders' in line:
-                str += f'{line}{{\n"path": "{local_path}"\n}},'
-            else:
-                str += line
+                if not rm:
+                    str += f'{line}{{\n"path": "{local_path}"\n}},'
+                else:
+                    str += line
+                    next_line_rm = True
+                continue
+            if next_line_rm:
+                next_line_rm = False
+                continue
+            if repo in line and rm:
+                next_line_rm = True
+                continue
+            str += line
     return str
+
+
+def remote_add():
+    chdir(local_path)
+    subprocess.check_call(['git', 'remote', 'add', 'origin', url])
+    # subprocess.check_call(['git', 'remote', 'set-url', 'origin', url])
+    subprocess.check_call(['git', 'remote', '-v'])
 
 
 def clone():
@@ -66,10 +76,21 @@ def clone():
     subprocess.check_call(['git', 'clone', url, local_path])
 
 
+def new_repo():
+
+    headers = {
+        'Authorization': 'token <token>',
+    }
+
+    data = '{"name": "","description": ""}'
+
+    response = requests.post(url_api, headers=headers, data=data)
+    return response
+
+
 def pull_new():
-    # subprocess.check_call(['git', 'init'])
-    # subprocess.check_call(['git','remote','add','origin',url])
-    subprocess.check_call(['git', 'pull', 'origin', 'master'])
+    subprocess.check_call(['git', 'init'])
+    # subprocess.check_call(['git', 'pull', 'origin', 'master'])
 
 
 def fork():
