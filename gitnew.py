@@ -2,19 +2,18 @@ from pathlib import Path
 import subprocess
 import sys
 from os import path, chdir, listdir
-from gmanager import calculator, game, git_first_level, git_special_dirs, home_w, rest_test
 from pathlib import Path
 import requests
 from itertools import islice
 
 
 home = str(Path.home())
+repo = 'nextjs'
 
-repo = 'react-app'
-workspace = path.join(home_w, 'workspace1.code-workspace')
+workspace = path.join(home, 'workspace1.code-workspace')
 
-# url_api = 'https://api.github.com/user/repos'
-# home_w = home_w.split('\\\\')[1]
+url_api = 'https://api.github.com/user/repos'
+# home = home.split('\\\\')[1]
 # url='git@192.168.178.36:/gt/'
 url = 'git@github.com:tik9/'
 # url = 'https://github.com/tik9/'
@@ -33,10 +32,12 @@ def main():
     # remote_add()
     # description = 'Game Dev in Javascript'
 
-    str_ = ch_workspace(True)
+    # str_ = ch_workspace(True)
     # print(str_)
-    with open(workspace, 'w') as file_:file_.write(str_)
+    # with open(workspace, 'w') as file_:
+    # file_.write(str_)
     # print(new_repo())
+    push_new()
 
 
 def ch_workspace(rm=False):
@@ -82,15 +83,16 @@ def new_repo():
         'Authorization': 'token <token>',
     }
 
-    data = '{"name": "","description": ""}'
+    data = '{"name": $repo,"description": "A nextjs app", "default_branch": "master"}'
 
     response = requests.post(url_api, headers=headers, data=data)
     return response
 
 
-def pull_new():
-    subprocess.check_call(['git', 'init'])
-    # subprocess.check_call(['git', 'pull', 'origin', 'master'])
+def push_new():
+    chdir(path.join(home, repo))
+    subprocess.check_call(
+        ['git', 'push', '--set-upstream', 'origin', 'master'])
 
 
 def fork():

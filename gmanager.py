@@ -10,11 +10,6 @@ jekyll = path.join(home, 'portable')
 bewerbung = path.join(jekyll, 'bewerbung')
 
 
-# home_w = path.dirname(path.dirname(path.abspath(__file__)))
-# print(home)
-# sys.exit()
-
-
 class color:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
@@ -42,7 +37,6 @@ def main():
     # msg = 'python data cleaning !!NEW!!'
     # commit(msg=msg, br=br)
     dlist = dwalk()
-    # dlist.append(walk())
     dlist.append(custom)
     dlist.append(powershell)
     all(dlist)
@@ -54,9 +48,9 @@ def all(dlist):
         print(color.BOLD, repo, color.END)
         chdir(repo)
         # run('pull')
-        run('status')
+        # run('status')
         # run ('remote','-v')
-        # commit()
+        commit()
     print(color.BOLD, 'End', color.END)
 
 
@@ -88,12 +82,10 @@ def run(*args):
     # return subprocess.Popen(['git'] + list(args))
 
 
-def commit(br=None, msg=None):
+def commit(msg=None):
 
     commit_message = msg
-    branch = br
-    if br == '':
-        branch = 'master'
+
     if msg == None:
         commit_message = 'commit from gmanager'
 
