@@ -1,18 +1,17 @@
 from pathlib import Path
 import subprocess
-import sys
-from os import path, chdir, listdir
+from os import path, chdir
 from pathlib import Path
 import requests
-from itertools import islice
 
 
 home = str(Path.home())
-repo = 'nextjs'
+repo='fritzbox'
 
 workspace = path.join(home, 'workspace1.code-workspace')
 
 url_api = 'https://api.github.com/user/repos'
+
 # home = home.split('\\\\')[1]
 # url='git@192.168.178.36:/gt/'
 url = 'git@github.com:tik9/'
@@ -36,9 +35,38 @@ def main():
     # print(str_)
     # with open(workspace, 'w') as file_:
     # file_.write(str_)
-    # print(new_repo())
-    push_new()
+    print(create_repository())
+    # push_new()
 
+
+def remote_add():
+    chdir(local_path)
+    subprocess.check_call(['git', 'remote', 'add', 'origin', url])
+    # subprocess.check_call(['git', 'remote', 'set-url', 'origin', url])
+    subprocess.check_call(['git', 'remote', '-v'])
+
+
+def clone():
+    # print(url, local_path)
+    # print(local_path)
+    subprocess.check_call(['git', 'clone', url, local_path])
+
+
+def new_repo():
+
+    headers = {
+        'Authorization': 'token abc'
+    }
+
+    data = '{"name": "fritzbox", "default_branch": "master"}'
+
+    response = requests.post(url_api, headers=headers, data=data)
+    return response.json()
+
+def push_new():
+    chdir(path.join(home, repo))
+    subprocess.check_call(
+        ['git', 'push', '--set-upstream', 'origin', 'master'])
 
 def ch_workspace(rm=False):
     str = ''
@@ -62,37 +90,6 @@ def ch_workspace(rm=False):
                 continue
             str += line
     return str
-
-
-def remote_add():
-    chdir(local_path)
-    subprocess.check_call(['git', 'remote', 'add', 'origin', url])
-    # subprocess.check_call(['git', 'remote', 'set-url', 'origin', url])
-    subprocess.check_call(['git', 'remote', '-v'])
-
-
-def clone():
-    # print(url, local_path)
-    # print(local_path)
-    subprocess.check_call(['git', 'clone', url, local_path])
-
-
-def new_repo():
-
-    headers = {
-        'Authorization': 'token <token>',
-    }
-
-    data = '{"name": $repo,"description": "A nextjs app", "default_branch": "master"}'
-
-    response = requests.post(url_api, headers=headers, data=data)
-    return response
-
-
-def push_new():
-    chdir(path.join(home, repo))
-    subprocess.check_call(
-        ['git', 'push', '--set-upstream', 'origin', 'master'])
 
 
 def fork():

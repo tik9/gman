@@ -1,14 +1,15 @@
 import subprocess
-from os import chdir, listdir, path, scandir, walk
-import sys
+from os import chdir, path, walk
 from pathlib import Path
-import git
+import requests
 
 home = str(Path.home())
 
-jekyll = path.join(home, 'portable')
-bewerbung = path.join(jekyll, 'bewerbung')
+bewerbung = path.join(home, 'bewerbung')
 
+url_api = 'https://api.github.com/user/repos'
+repo='react-app'
+repo='repo'
 
 class color:
     BOLD = '\033[1m'
@@ -19,14 +20,13 @@ class color:
 config = '.config'
 powershell = path.join(home, config, 'powershell')
 
-powershell = path.join(home, 'documents', 'windowspowershell')
+# powershell = path.join(home, 'documents', 'windowspowershell')
 user_code = 'Code/User'
 user = path.join(home, config, user_code)
-user = path.join(home, 'AppData/Roaming', user_code)
+# user = path.join(home, 'AppData/Roaming', user_code)
 custom = path.join(home, '.oh-my-zsh', 'custom')
 
-excludedirs = ['.oh-my-zsh', 'calculator',
-               'cpython', 'doks', 'game', 'gman', 'ml']
+excludedirs = ['.oh-my-zsh', 'cpython', 'doks', 'game', 'gman', 'ml']
 
 
 def main():
@@ -39,18 +39,22 @@ def main():
     dlist = dwalk()
     dlist.append(custom)
     dlist.append(powershell)
-    all(dlist)
+    # all(dlist)
+    print(delete_repository())
 
+def delete_repository():
+    response = requests.delete(url_api+'/tik9/'+repo)
+    print(response.json())
 
 def all(dlist):
     for repo in dlist:
         # pass
         print(color.BOLD, repo, color.END)
         chdir(repo)
-        # run('pull')
-        # run('status')
+        # run('pull','origin','master')
+        run('status')
         # run ('remote','-v')
-        commit()
+        # commit()
     print(color.BOLD, 'End', color.END)
 
 
