@@ -3,25 +3,26 @@ import subprocess
 from os import path, chdir
 from pathlib import Path
 import requests
-
+from settings import token
+from github import Github
 
 home = str(Path.home())
 repo='fritzbox'
+
+g=Github(token)
 
 workspace = path.join(home, 'workspace1.code-workspace')
 
 url_api = 'https://api.github.com/user/repos'
 
-# home = home.split('\\\\')[1]
 # url='git@192.168.178.36:/gt/'
 url = 'git@github.com:tik9/'
-# url = 'https://github.com/tik9/'
 url = path.join(url, repo)
 # print(url)
 # base, user, repo = url.rsplit('/', 2)
 
 # local_path = repo
-local_path = path.join(home, repo).replace('\\', '/')
+local_path = path.join(home, repo)
 # print(local_path)
 
 
@@ -29,14 +30,14 @@ def main():
     str_ = ''
     # clone()
     # remote_add()
-    # description = 'Game Dev in Javascript'
+    # new_repo()
 
     # str_ = ch_workspace(True)
     # print(str_)
     # with open(workspace, 'w') as file_:
     # file_.write(str_)
-    print(create_repository())
-    # push_new()
+    # print(create_repository())
+    push_new()
 
 
 def remote_add():
@@ -51,8 +52,11 @@ def clone():
     # print(local_path)
     subprocess.check_call(['git', 'clone', url, local_path])
 
-
 def new_repo():
+    new=g.get_user().create_repo(repo)
+    print(new.json())
+
+def new_repo2():
 
     headers = {
         'Authorization': 'token abc'

@@ -2,14 +2,17 @@ import subprocess
 from os import chdir, path, walk
 from pathlib import Path
 import requests
+from github import Github
+from settings import token
 
 home = str(Path.home())
 
 bewerbung = path.join(home, 'bewerbung')
 
 url_api = 'https://api.github.com/user/repos'
-repo='react-app'
 repo='repo'
+
+g=Github(token)
 
 class color:
     BOLD = '\033[1m'
@@ -31,20 +34,23 @@ excludedirs = ['.oh-my-zsh', 'cpython', 'doks', 'game', 'gman', 'ml']
 
 def main():
 
-    br = ''
-    msg = 'commit from gitmanagerpy'
+    # delete_repository('')
 
-    # msg = 'python data cleaning !!NEW!!'
+    for idx, repo in enumerate(g.get_user().get_repos()):
+        print(idx,repo.name)
+        
+        # print(dir(repo))
+
     # commit(msg=msg, br=br)
     dlist = dwalk()
-    dlist.append(custom)
     dlist.append(powershell)
     # all(dlist)
-    print(delete_repository())
+    print('')
 
-def delete_repository():
-    response = requests.delete(url_api+'/tik9/'+repo)
-    print(response.json())
+
+def delete_repository(repo):
+    repo = g.get_user().get_repo(repo)
+    repo.delete()
 
 def all(dlist):
     for repo in dlist:
