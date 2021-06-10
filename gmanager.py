@@ -1,18 +1,7 @@
 import subprocess
 from os import chdir, path, walk
-from pathlib import Path
-import requests
-from github import Github
-from settings import token
+from settings import *
 
-home = str(Path.home())
-
-bewerbung = path.join(home, 'bewerbung')
-
-url_api = 'https://api.github.com/user/repos'
-repo='repo'
-
-g=Github(token)
 
 class color:
     BOLD = '\033[1m'
@@ -20,13 +9,10 @@ class color:
     END = '\033[0m'
 
 
-config = '.config'
+bewerbung = path.join(home, 'bewerbung')
 powershell = path.join(home, config, 'powershell')
 
 # powershell = path.join(home, 'documents', 'windowspowershell')
-user_code = 'Code/User'
-user = path.join(home, config, user_code)
-# user = path.join(home, 'AppData/Roaming', user_code)
 custom = path.join(home, '.oh-my-zsh', 'custom')
 
 excludedirs = ['.oh-my-zsh', 'cpython', 'doks', 'game', 'gman', 'ml']
@@ -35,15 +21,12 @@ excludedirs = ['.oh-my-zsh', 'cpython', 'doks', 'game', 'gman', 'ml']
 def main():
 
     # delete_repository('')
-
-    for idx, repo in enumerate(g.get_user().get_repos()):
-        print(idx,repo.name)
         
         # print(dir(repo))
-
-    # commit(msg=msg, br=br)
-    dlist = dwalk()
-    dlist.append(powershell)
+    msg='first push,second commit'
+    commit(msg=msg)
+    # dlist = dwalk()
+    # dlist.append(powershell)
     # all(dlist)
     print('')
 
@@ -93,7 +76,6 @@ def run(*args):
 
 
 def commit(msg=None):
-
     commit_message = msg
 
     if msg == None:
@@ -103,10 +85,12 @@ def commit(msg=None):
     run('commit', '-am', commit_message)
     run('push')
 
-
 def branch(br):
-
     run('checkout', '-b', br)
+
+def repos():
+    for idx, repo in enumerate(g.get_user().get_repos()):
+        print(idx,repo.name)
 
 
 if __name__ == '__main__':

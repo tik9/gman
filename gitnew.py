@@ -1,43 +1,19 @@
-from pathlib import Path
 import subprocess
 from os import path, chdir
-from pathlib import Path
-import requests
-from settings import token
-from github import Github
-
-home = str(Path.home())
-repo='fritzbox'
-
-g=Github(token)
-
-workspace = path.join(home, 'workspace1.code-workspace')
-
-url_api = 'https://api.github.com/user/repos'
-
-# url='git@192.168.178.36:/gt/'
-url = 'git@github.com:tik9/'
-url = path.join(url, repo)
-# print(url)
-# base, user, repo = url.rsplit('/', 2)
-
-# local_path = repo
-local_path = path.join(home, repo)
-# print(local_path)
+from settings import *
 
 
 def main():
-    str_ = ''
     # clone()
     # remote_add()
     # new_repo()
 
-    # str_ = ch_workspace(True)
-    # print(str_)
+    str_ = ch_workspace()
+    print(str_)
     # with open(workspace, 'w') as file_:
     # file_.write(str_)
     # print(create_repository())
-    push_new()
+    # push_new()
 
 
 def remote_add():
@@ -56,41 +32,20 @@ def new_repo():
     new=g.get_user().create_repo(repo)
     print(new.json())
 
-def new_repo2():
-
-    headers = {
-        'Authorization': 'token abc'
-    }
-
-    data = '{"name": "fritzbox", "default_branch": "master"}'
-
-    response = requests.post(url_api, headers=headers, data=data)
-    return response.json()
 
 def push_new():
     chdir(path.join(home, repo))
     subprocess.check_call(
         ['git', 'push', '--set-upstream', 'origin', 'master'])
 
-def ch_workspace(rm=False):
+def ch_workspace():
     str = ''
-    next_line_rm = False
     with open(workspace, 'r') as file_:
         # head = list(islice(file_, 8))
 
         for line in file_:
             if 'folders' in line:
-                if not rm:
-                    str += f'{line}{{\n"path": "{local_path}"\n}},'
-                else:
-                    str += line
-                    next_line_rm = True
-                continue
-            if next_line_rm:
-                next_line_rm = False
-                continue
-            if repo in line and rm:
-                next_line_rm = True
+                str += f'{line}{{\n"path": "{local_path}"\n}},'
                 continue
             str += line
     return str
