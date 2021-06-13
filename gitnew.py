@@ -5,21 +5,20 @@ from settings import *
 
 def main():
     # clone()
-    # remote_add()
+    chdir(local_path)
+    # remote_addchange()
     # new_repo()
 
     str_ = ch_workspace()
-    print(str_)
     # with open(workspace, 'w') as file_:
     # file_.write(str_)
-    # print(create_repository())
+    print(str_)
     # push_new()
 
 
-def remote_add():
-    chdir(local_path)
-    subprocess.check_call(['git', 'remote', 'add', 'origin', url])
-    # subprocess.check_call(['git', 'remote', 'set-url', 'origin', url])
+def remote_addchange():
+    # subprocess.check_call(['git', 'remote', 'add', 'origin', url])
+    subprocess.check_call(['git', 'remote', 'set-url', 'origin', url])
     subprocess.check_call(['git', 'remote', '-v'])
 
 
@@ -28,8 +27,9 @@ def clone():
     # print(local_path)
     subprocess.check_call(['git', 'clone', url, local_path])
 
+
 def new_repo():
-    new=g.get_user().create_repo(repo)
+    new = g.get_user().create_repo(repo)
     print(new.json())
 
 
@@ -38,17 +38,18 @@ def push_new():
     subprocess.check_call(
         ['git', 'push', '--set-upstream', 'origin', 'master'])
 
+
 def ch_workspace():
-    str = ''
+    str_ = ''
     with open(workspace, 'r') as file_:
         # head = list(islice(file_, 8))
-
         for line in file_:
+            # print(line)
             if 'folders' in line:
-                str += f'{line}{{\n"path": "{local_path}"\n}},'
+                str_ += f'{line}{{\n"path": "{local_path}"\n}},'
                 continue
-            str += line
-    return str
+            str_ += line
+    return str_
 
 
 def fork():
