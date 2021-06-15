@@ -9,15 +9,16 @@ def main():
     # remote_addchange()
     # new_repo()
 
-    str_ = ch_workspace()
+    # str_ = ch_workspace()
     # with open(workspace, 'w') as file_:
     # file_.write(str_)
-    print(str_)
-    # push_new()
+    # print(str_)
+    push_new()
 
 
 def remote_addchange():
     # subprocess.check_call(['git', 'remote', 'add', 'origin', url])
+    print(local_path,url)
     subprocess.check_call(['git', 'remote', 'set-url', 'origin', url])
     subprocess.check_call(['git', 'remote', '-v'])
 
@@ -34,7 +35,6 @@ def new_repo():
 
 
 def push_new():
-    chdir(path.join(home, repo))
     subprocess.check_call(
         ['git', 'push', '--set-upstream', 'origin', 'master'])
 

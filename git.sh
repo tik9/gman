@@ -1,13 +1,18 @@
+# set -x
 
 arr01=('lx' 'lxqt/')
 arr02=('ws' 'work/')
 arr1=(arr01 arr02)
 
-# arr1=((0 '1 2') (3 4))
+if [[ "$HOSTNAME" == "tik" ]]; then
+	echo host $HOSTNAME
+else
+	echo 'lubuntu'
+fi
 
-declare -n elmv1
-for elmv1 in "${arr1[@]}"; do
-	for elm in "${elmv1[@]}"; do
+declare -n elmv
+for elmv in "${arr1[@]}"; do
+	for elm in "${elmv[@]}"; do
 		echo $elm
 	done
 done
