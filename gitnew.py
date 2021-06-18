@@ -6,20 +6,20 @@ from settings import *
 def main():
     # clone()
     chdir(local_path)
-    # remote_addchange()
+    remote_addchange()
     # new_repo()
 
     # str_ = ch_workspace()
     # with open(workspace, 'w') as file_:
     # file_.write(str_)
     # print(str_)
-    push_new()
+    # push_new()
 
 
 def remote_addchange():
-    # subprocess.check_call(['git', 'remote', 'add', 'origin', url])
     print(local_path,url)
-    subprocess.check_call(['git', 'remote', 'set-url', 'origin', url])
+    # subprocess.check_call(['git', 'remote', 'add', 'origin', url])
+    # subprocess.check_call(['git', 'remote', 'set-url', 'origin', url])
     subprocess.check_call(['git', 'remote', '-v'])
 
 

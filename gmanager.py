@@ -1,5 +1,5 @@
 import subprocess
-from os import chdir, path, walk
+from os import chdir,getcwd, path, walk
 from settings import *
 
 
@@ -9,7 +9,7 @@ class color:
     END = '\033[0m'
 
 
-excludedirs = ['.oh-my-zsh', 'game', 'tik9.github.io']
+excludedirs = ['.oh-my-zsh', 'game', 'gman','tik9.github.io']
 
 
 def main():
@@ -18,28 +18,28 @@ def main():
     # delete_repository(repo)
 
     # commit(msg='first')
-    dlist = []
+    # dlist = []
     dlist = dwalk()
     # print(type(dlist),type(addlist))
     dlist.extend(addlist)
     all(dlist)
     # print(local_path)
-    # print(list(enumerate(repos())))
+    print(repos())
 
-
-def delete_repository(repo):
-    repo = g.get_user().get_repo(repo)
-    repo.delete()
-
+def repos():
+    repos=[]
+    for repo in pygh_user.get_repos():
+        repos.append(repo.name)
+    return list(enumerate(repos))
 
 def all(dlist):
     # print(type(dlist))
     for repo in dlist:
-        # pass
-        print(repo)
+        print(color.BOLD,repo,color.END)
         chdir(repo)
+        # print(getcwd())
         # run('pull','origin','master')
-        run('status')
+        # run('status')
         # run('diff', '--summary')
         # | grep --color "mode change 100644 => 100755"'
 
@@ -91,11 +91,10 @@ def branch(br):
     run('checkout', '-b', br)
 
 
-def repos():
-    repos=[]
-    for idx, repo in enumerate(g.get_user().get_repos()):
-        repos.append(repo.name)
-    return repos
+
+def delete_repository(repo):
+    repo = pygh_user.get_repo(repo)
+    repo.delete()
 
 if __name__ == '__main__':
     main()
