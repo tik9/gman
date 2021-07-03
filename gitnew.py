@@ -17,9 +17,9 @@ def main():
 
 
 def remote_addchange():
-    print(local_path,url)
+    print(local_path, url)
     # subprocess.check_call(['git', 'remote', 'add', 'origin', url])
-    # subprocess.check_call(['git', 'remote', 'set-url', 'origin', url])
+    subprocess.check_call(['git', 'remote', 'set-url', 'origin', url])
     subprocess.check_call(['git', 'remote', '-v'])
 
 

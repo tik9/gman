@@ -18,10 +18,9 @@ gitlocal (){
 		gitdir=$mntc/git
 		ho=$mntc/Users/User
 		dirs=(
-			[workspaces]=$ho
+			# [workspaces]=$ho
 			[gitconfig_win]=$gitdir/etc
-			[vsco]=~/appdata/roaming/code/user
-
+			# [vsco]=$ho/appdata/roaming/code/user
 		)
 		git=$gitdir/cmd/git.exe
 	else
@@ -40,16 +39,16 @@ gitlocal (){
 
 	for name dir in ${(kv)dirs}; do
 		cd $dir
-		# print -P "%F{$color}`pwd`%f\n"		
 		pwd
 		# ls
 		# git remote add origin git@$ip:/gt/$name.git
 		# $git remote -v
+		# $git status
 
 		# $git add .
-		$git commit -am "commit from git.zsh $HOST"
-		$git push --set-upstream origin master
-		# $git status
+		# $git commit -am "commit from git.zsh $HOST"
+		# $git push --set-upstream origin master
+		$git pull
 		# $git diff --summary
 	done
 }
@@ -71,7 +70,7 @@ gitremote() {
 	  '
 }
 
-gitremote
-# gitlocal
+# gitremote
+gitlocal
 
 # echo $0 loaded

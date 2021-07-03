@@ -1,7 +1,7 @@
 import subprocess
-from os import chdir,getcwd, path, walk
+from os import chdir, path, walk
 from settings import *
-
+import shutil
 
 class color:
     BOLD = '\033[1m'
@@ -9,43 +9,52 @@ class color:
     END = '\033[0m'
 
 
-excludedirs = ['.oh-my-zsh', 'game', 'gman','tik9.github.io']
+excludedirs = ['.oh-my-zsh', 'game', 'gman', 'tik9.github.io']
 
 
 def main():
 
-    chdir(local_path)
-    # delete_repository(repo)
-
+    # chdir(local_path)
+    repo = 'further-skill-tests'
+    delete_ghrepo(repo)
+    # delete_localrepo(path.join(home,'rest_git',repo))
     # commit(msg='first')
     # dlist = []
     dlist = dwalk()
-    # print(type(dlist),type(addlist))
     dlist.extend(addlist)
-    all(dlist)
-    # print(local_path)
-    print(repos())
+    rlist = localrepos(dlist)
+    # print(rlist)
+    print(ghrepos())
 
-def repos():
-    repos=[]
+
+def delete_localrepo(folder):
+    shutil.rmtree(folder)
+    print('delete', repo)
+
+
+def ghrepos():
+    repos = []
     for repo in pygh_user.get_repos():
         repos.append(repo.name)
     return list(enumerate(repos))
 
-def all(dlist):
-    # print(type(dlist))
-    for repo in dlist:
-        print(color.BOLD,repo,color.END)
-        chdir(repo)
-        # print(getcwd())
-        # run('pull','origin','master')
-        # run('status')
-        # run('diff', '--summary')
-        # | grep --color "mode change 100644 => 100755"'
 
-        # run ('remote','-v')
-        # commit()
-    # print(color.BOLD, 'End', color.END)
+def localrepos(dlist):
+    # print(type(dlist))
+    rlist = []
+    for repo in dlist:
+        rlist.append(repo)
+    return rlist
+
+    # chdir(repo)
+    # print(getcwd())
+    # run('pull','origin','master')
+    # run('status')
+    # run('diff', '--summary')
+    # | grep --color "mode change 100644 => 100755"'
+
+    # run ('remote','-v')
+    # commit()
 
 
 def dwalk():
@@ -91,10 +100,10 @@ def branch(br):
     run('checkout', '-b', br)
 
 
-
-def delete_repository(repo):
+def delete_ghrepo(repo):
     repo = pygh_user.get_repo(repo)
     repo.delete()
+
 
 if __name__ == '__main__':
     main()

@@ -1,10 +1,10 @@
 # set -x
 
-arr01=('lx' 'lxqt/')
+	arr01=('lx' 'lxqt/')
 arr02=('ws' 'work/')
 arr1=(arr01 arr02)
 
-if [[ "$HOSTNAME" == "tik" ]]; then
+if [[ $HOSTNAME == tik ]]; then
 	echo host $HOSTNAME
 else
 	echo 'lubuntu'
