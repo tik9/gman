@@ -1,20 +1,27 @@
 import subprocess
-from os import path, chdir
+from os import chdir, makedirs, path
 from settings import *
+import pydoc
 
 
 def main():
+    new_localrepo()
     # clone()
-    chdir(local_path)
-    remote_addchange()
-    # new_repo()
+    # chdir(local_path)
+    # remote_addchange()
+    # str_ = new_ghrepo()
 
-    # str_ = ch_workspace()
+    str_ = ch_workspace()
     # with open(workspace, 'w') as file_:
-    # file_.write(str_)
-    # print(str_)
+        # file_.write(str_)
+    # pydoc.pager(str_)
     # push_new()
 
+
+def new_localrepo():
+    makedirs(local_path, exist_ok=True)
+    chdir(local_path)
+    subprocess.check_call(['git','init'])
 
 def remote_addchange():
     print(local_path, url)
@@ -29,9 +36,9 @@ def clone():
     subprocess.check_call(['git', 'clone', url, local_path])
 
 
-def new_repo():
+def new_ghrepo():
     new = g.get_user().create_repo(repo)
-    print(new.json())
+    return new
 
 
 def push_new():
@@ -59,19 +66,6 @@ def fork():
 
     # subprocess.check_call(['git','remote','add','upstream',url])
     # subprocess.check_call(['git', 'pull', 'upstream', 'master'])
-
-
-def prep_workspace():
-    str = '{\n'
-    str += '"folders":[\n'
-
-    git_special_dirs.extend(git_first_level())
-
-    for dir in git_special_dirs:
-        str += f'{{"path":"{dir}"}},'
-
-    str += ']}'
-    return str
 
 
 def aliase():

@@ -1,5 +1,6 @@
 # set -x
 
+gt=/gt
 ip=192.168.178.36
 user=git
 # user=tk;ip=192.168.178.23
@@ -53,24 +54,32 @@ gitlocal (){
 	done
 }
 
-gitremote() {
+gitremote_add() {
 
 	 ssh $user@$ip \
 	 '
-	fs=gitconfig_win
-
-	echo ${(C)fs}
+	fs=''
+	# echo ${(C)fs}
 
 	for elem in $fs ; do
-	# echo $elem
- 	 mkdir /gt/$elem.git 
-	 cd /gt/$elem.git
-	 git init --bare
+		echo $elem
+ 	#  mkdir $gt/$elem.git 
+	#  cd $gt/$elem.git
+	#  git init --bare
 	 done
 	  '
 }
+gitremote_del(){
+	ssh $user@$ip \
+	'
+	dir=bewerbung
 
-# gitremote
+	rm $gt/$dir.git
+	ls $gt
+	'
+}
+
+gitremote_del
 gitlocal
 
 # echo $0 loaded
