@@ -1,4 +1,4 @@
-from os import chdir,getcwd, path, sep
+from os import chdir, getcwd, path, sep
 from pathlib import Path
 from github import Github
 import socket
@@ -6,16 +6,16 @@ import socket
 hostname = socket.gethostname()
 home = str(Path.home())
 
+repo = 'apps'
 repo = 'ghtemplate'
 
 documents = path.join(home, 'documents')
-local_path = path.join('c:' + sep, 'git', 'etc')
+# local_path = path.join('c:' + sep, 'git', 'etc')
+local_path = path.join(home, repo)
 if hostname == 't--pc':
     documents = path.join(home, 'Dokumente')
-    local_path = path.join(home, repo)
 
 # print(chdir(local_path))
-
 
 # url = 'git@192.168.178.36:/gt/'
 url = 'git@github.com:tik9/'
@@ -30,12 +30,12 @@ user = path.join(home, 'AppData/Roaming', user_code)
 
 workspace = path.join(home, 'workspace.code-workspace')
 
-custom=path.join(home, '.oh-my-zsh', 'custom')
+custom = path.join(home, '.oh-my-zsh', 'custom')
 addlist = [custom]
 
 with open(path.join(documents, 'ghtoken'), 'r') as file_:
     token = file_.read()
-ws=''
+ws = ''
 if hostname == 't--pc':
     config = '.config'
     token = token[:-1]

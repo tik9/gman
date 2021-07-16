@@ -5,29 +5,34 @@ import pydoc
 
 
 def main():
-    new_localrepo()
-    # clone()
-    # chdir(local_path)
-    # remote_addchange()
+    # pass
+    chdir(local_path)
+    # new_localrepo()
     # str_ = new_ghrepo()
+    clone()
 
-    str_ = ch_workspace()
+    # str_ = ch_workspace()
     # with open(workspace, 'w') as file_:
-        # file_.write(str_)
-    # pydoc.pager(str_)
+    # file_.write(str_)
+
+    # str_ = new_ghrepo()
     # push_new()
+    # str_ = remote_addchange()
+
+    print(str_)
+    # pydoc.pager(str_)
 
 
 def new_localrepo():
     makedirs(local_path, exist_ok=True)
-    chdir(local_path)
-    subprocess.check_call(['git','init'])
+    subprocess.check_call(['git', 'init'])
+
 
 def remote_addchange():
-    print(local_path, url)
+    # print(local_path, url)
     # subprocess.check_call(['git', 'remote', 'add', 'origin', url])
     subprocess.check_call(['git', 'remote', 'set-url', 'origin', url])
-    subprocess.check_call(['git', 'remote', '-v'])
+    return subprocess.check_call(['git', 'remote', '-v'])
 
 
 def clone():

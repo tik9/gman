@@ -3,33 +3,44 @@ from os import chdir, path, walk
 from settings import *
 import shutil
 
+
 class color:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
     END = '\033[0m'
 
 
-excludedirs = ['.oh-my-zsh', 'game', 'gman', 'tik9.github.io']
+# 'custom'
+# excludedirs = ['.oh-my-zsh','apps','cpython','fritzbox', 'game', 'ghtemplate','gman','tik9.github.io']
+excludedirs = ['.oh-my-zsh', 'game', 'gman', ]
 
 
 def main():
 
     # chdir(local_path)
-    repo = 'further-skill-tests'
-    delete_ghrepo(repo)
-    # delete_localrepo(path.join(home,'rest_git',repo))
+    # delete_ghrepo(repo)
+    # delete_localrepo(path.join(home,repo))
     # commit(msg='first')
-    # dlist = []
     dlist = dwalk()
-    dlist.extend(addlist)
-    rlist = localrepos(dlist)
-    # print(rlist)
-    print(ghrepos())
+    # dlist.extend(addlist)
+    localrepos(dlist)
+    # print(dlist)
+    # print(ghrepos())
 
 
-def delete_localrepo(folder):
-    shutil.rmtree(folder)
-    print('delete', repo)
+def localrepos(dlist):
+    # print(type(dlist))
+    for repo in dlist:
+
+        chdir(repo)
+        print(getcwd())
+        # run('pull','origin','master')
+        run('status')
+        # run('diff', '--summary')
+        # | grep --color "mode change 100644 => 100755"'
+
+        # run ('remote','-v')
+        # commit(getcwd())
 
 
 def ghrepos():
@@ -37,24 +48,6 @@ def ghrepos():
     for repo in pygh_user.get_repos():
         repos.append(repo.name)
     return list(enumerate(repos))
-
-
-def localrepos(dlist):
-    # print(type(dlist))
-    rlist = []
-    for repo in dlist:
-        rlist.append(repo)
-    return rlist
-
-    # chdir(repo)
-    # print(getcwd())
-    # run('pull','origin','master')
-    # run('status')
-    # run('diff', '--summary')
-    # | grep --color "mode change 100644 => 100755"'
-
-    # run ('remote','-v')
-    # commit()
 
 
 def dwalk():
@@ -89,20 +82,21 @@ def commit(msg=None):
     commit_message = msg
 
     if msg == None:
-        commit_message = 'commit from gmanager'
-
+        commit_message = 'commit from gmanager by ' + hostname
+    # print(commit_message)
     run('add', '.')
     run('commit', '-am', commit_message)
     run('push')
 
 
-def branch(br):
-    run('checkout', '-b', br)
-
-
 def delete_ghrepo(repo):
     repo = pygh_user.get_repo(repo)
     repo.delete()
+
+
+def delete_localrepo(folder):
+    shutil.rmtree(folder)
+    print('delete', repo)
 
 
 if __name__ == '__main__':

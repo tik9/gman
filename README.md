@@ -1,18 +1,23 @@
 
 ### Goal
 Scripts related to Git - local and remote Repo creation and update
-&nbsp;
+
+<br>
 
 ### Steps to reach Goal
 - Include a settings.py file for repo variables
+- Split functions for repo creation and updating/maintenance in 2 files
+- Added Python `pygithub` for easier github api access with `token`
 
-### Tools used
-- Vscode
+<br>
+
+### Tools needed
 - Python
-- Zsh
-- SSH
+- see requirements.txt
+
+<br>
 
 ### Contents
 
-- [Create Repo](gitnew.py)
+- [Create Git Repo](gitnew.py)
 - [Manage repo](gmanager.py)
