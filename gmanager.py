@@ -1,5 +1,5 @@
 import subprocess
-from os import chdir, path, walk
+from os import path, walk
 from settings import *
 import shutil
 
@@ -12,7 +12,7 @@ class color:
 
 # 'custom'
 # excludedirs = ['.oh-my-zsh','apps','cpython','fritzbox', 'game', 'ghtemplate','gman','tik9.github.io']
-excludedirs = ['.oh-my-zsh', 'game', 'gman', ]
+excludedirs = ['.oh-my-zsh', 'fritzbox', 'game', 'gman', ]
 
 
 def main():
@@ -22,25 +22,46 @@ def main():
     # delete_localrepo(path.join(home,repo))
     # commit(msg='first')
     dlist = dwalk()
-    # dlist.extend(addlist)
-    localrepos(dlist)
-    # print(dlist)
-    # print(ghrepos())
+    dlist.extend(addlist)
+    # result = testgpython()
+    # result = commits()
+    # repo = Repo(custom)
+    # result = commit(repo)
+    result = localrepos(dlist)
+    # with open('test.txt', 'w') as file_:
+        # file_.write(result)
+
+    print(result)
+
+
+def commit(repo):
+    try:
+        # print(commit_message)
+        repo.git.add(update=True)
+        repo.git.commit(m='commit from gmanager by ' + hostname)
+        return repo.remote(name='origin').push()
+    except:
+        return('this is an error')
+    # run('push')
 
 
 def localrepos(dlist):
     # print(type(dlist))
     for repo in dlist:
 
-        chdir(repo)
-        print(getcwd())
-        # run('pull','origin','master')
-        run('status')
-        # run('diff', '--summary')
-        # | grep --color "mode change 100644 => 100755"'
+        # chdir(repo)
+        print(repo)
+        # repo = Repo(repo).git
+        # result = repo.status()
+        # result = repo.pull()
+        # result=repo.diff()
+        # print(result)
 
-        # run ('remote','-v')
-        # commit(getcwd())
+        # run('diff', '--summary')
+        # run('diff')
+        # | grep --color "mode change 100644 => 100755"'
+        # commit(repo)
+    return 0
 
 
 def ghrepos():
@@ -61,9 +82,9 @@ def dwalk():
 
 
 def walklevel():
-    num_sep = home.count(path.sep)
+    num_sep = base_folder.count(path.sep)
     # print('num sep', num_sep)
-    for root, dirs, files in walk(home):
+    for root, dirs, files in walk(base_folder):
         yield root, dirs, files
         dirs.sort()
         num_sep_this = root.count(path.sep)
@@ -78,25 +99,9 @@ def run(*args):
     # return subprocess.Popen(['git'] + list(args))
 
 
-def commit(msg=None):
-    commit_message = msg
-
-    if msg == None:
-        commit_message = 'commit from gmanager by ' + hostname
-    # print(commit_message)
-    run('add', '.')
-    run('commit', '-am', commit_message)
-    run('push')
-
-
 def delete_ghrepo(repo):
     repo = pygh_user.get_repo(repo)
     repo.delete()
-
-
-def delete_localrepo(folder):
-    shutil.rmtree(folder)
-    print('delete', repo)
 
 
 if __name__ == '__main__':
