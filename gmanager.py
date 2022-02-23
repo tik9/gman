@@ -12,18 +12,18 @@ class color:
 
 # 'custom'
 # excludedirs = ['.oh-my-zsh','apps','cpython','fritzbox', 'game', 'ghtemplate','gman','tik9.github.io']
-excludedirs = ['.oh-my-zsh', 'game', 'gman', ]
+excludedirs = ['.oh-my-zsh', 'gman', ]
 
 
 def main():
-
+    # repo='game'
     # chdir(local_path)
-    # delete_ghrepo(repo)
+    delete_ghrepo(repo)
     # delete_localrepo(path.join(home,repo))
     # commit(msg='first')
-    dlist = dwalk()
+    # dlist = dwalk()
     # dlist.extend(addlist)
-    localrepos(dlist)
+    # localrepos(dlist)
     # print(dlist)
     # print(ghrepos())
 

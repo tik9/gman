@@ -1,15 +1,14 @@
 import subprocess
 from os import chdir, makedirs, path
 from settings import *
-import pydoc
 
 
 def main():
     # pass
-    chdir(local_path)
-    # new_localrepo()
+    # chdir(local_path)
+    new_localrepo()
     # str_ = new_ghrepo()
-    clone()
+    # clone()
 
     # str_ = ch_workspace()
     # with open(workspace, 'w') as file_:
@@ -19,31 +18,27 @@ def main():
     # push_new()
     # str_ = remote_addchange()
 
-    print(str_)
-    # pydoc.pager(str_)
-
 
 def new_localrepo():
     makedirs(local_path, exist_ok=True)
     subprocess.check_call(['git', 'init'])
 
-
-def remote_addchange():
-    # print(local_path, url)
-    # subprocess.check_call(['git', 'remote', 'add', 'origin', url])
-    subprocess.check_call(['git', 'remote', 'set-url', 'origin', url])
-    return subprocess.check_call(['git', 'remote', '-v'])
-
-
 def clone():
     # print(url, local_path)
     # print(local_path)
-    subprocess.check_call(['git', 'clone', url, local_path])
+    subprocess.check_call(['git', 'clone', repo_url, local_path])
 
 
 def new_ghrepo():
     new = g.get_user().create_repo(repo)
     return new
+
+
+def remote_addchange():
+    # print(local_path, url)
+    subprocess.check_call(['git', 'remote', 'add', 'origin', repo_url])
+    # subprocess.check_call(['git', 'remote', 'set-url', 'origin', url])
+    return subprocess.check_call(['git', 'remote', '-v'])
 
 
 def push_new():
