@@ -4,21 +4,19 @@ from github import Github
 import socket
 import sys
 
-pythonex = path.dirname(sys.executable)
-
+sysex = sys.executable
 
 hostname = socket.gethostname()
 home = str(Path.home())
-base_folder=path.dirname(path.dirname(__file__))
-
 script_folder = path.dirname(__file__)
+base_folder=path.dirname(script_folder)
 
 repo = 'spa'
 
 documents = path.join(base_folder, 'documents')
 # local_path = path.join('c:' + sep, 'git', 'etc')
 
-local_path = path.join(home, repo)
+local_path = path.join(base_folder, repo)
 
 if hostname == 't--pc':
     documents = path.join(home, 'Dokumente')
@@ -56,4 +54,4 @@ if hostname == 't--pc':
 
 g = Github(token)
 pygh_user = g.get_user()
-print(pygh_user)
+# print(pygh_user)

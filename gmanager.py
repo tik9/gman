@@ -1,7 +1,6 @@
 import subprocess
-from os import path, walk
+from os import chdir,path, walk
 from settings import *
-import shutil
 
 
 class color:
@@ -11,16 +10,15 @@ class color:
 
 
 # 'custom'
-# excludedirs = ['.oh-my-zsh','apps','cpython','fritzbox', 'game', 'ghtemplate','gman','tik9.github.io']
 excludedirs = ['.oh-my-zsh', 'gman', ]
 
 
 def main():
-    # repo='game'
     # chdir(local_path)
+    repo='game'
     delete_ghrepo(repo)
+    # run('commit','-am','first commit')
     # delete_localrepo(path.join(home,repo))
-    # commit(msg='first')
     # dlist = dwalk()
     # dlist.extend(addlist)
     # localrepos(dlist)
@@ -79,7 +77,6 @@ def walklevel():
 
 def run(*args):
     return subprocess.check_call(['git'] + list(args))
-    # return subprocess.Popen(['git'] + list(args))
 
 
 def delete_ghrepo(repo):
