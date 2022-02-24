@@ -8,22 +8,20 @@ sysex = sys.executable
 
 hostname = socket.gethostname()
 home = str(Path.home())
+w_home = path.join('/', 'mnt', 'c', 'users', 'user')
+
 script_folder = path.dirname(__file__)
-base_folder=path.dirname(script_folder)
+base_folder = path.dirname(script_folder)
 
 repo = 'spa'
 
 documents = path.join(base_folder, 'documents')
-# local_path = path.join('c:' + sep, 'git', 'etc')
 
 local_path = path.join(base_folder, repo)
 
 if hostname == 't--pc':
     documents = path.join(home, 'Dokumente')
 
-# print(chdir(local_path))
-
-# url = 'git@192.168.178.36:/gt/'
 gh_url = 'git@github.com:tik9/'
 repo_url = path.join(gh_url, repo)
 
@@ -31,14 +29,13 @@ powershell = path.join(documents, 'windowspowershell')
 
 user_code = 'Code/User'
 user = path.join(base_folder, 'AppData/Roaming', user_code)
-ws=base_folder
-workspace = path.join(base_folder, 'workspace.code-workspace')
 
 custom = path.join(base_folder, '.oh-my-zsh', 'custom')
 addlist = [custom]
 
 with open(path.join(script_folder, 'ghtoken'), 'r') as file_:
     token = file_.read()
+workspace = path.join(w_home, 'workspace.code-workspace')
 if hostname == 't--pc':
     documents = path.join(base_folder, 'Dokumente')
     config = '.config'

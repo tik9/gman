@@ -1,42 +1,36 @@
 import subprocess
-from os import chdir,path, walk
+from os import chdir, path, walk
 from settings import *
-
-
-class color:
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
-    END = '\033[0m'
-
+from git import Repo
 
 # 'custom'
-excludedirs = ['.oh-my-zsh', 'gman', ]
+excludedirs = ['.oh-my-zsh', 'gman', 'ghtemplate']
 
 
 def main():
     # chdir(local_path)
-    repo='game'
-    delete_ghrepo(repo)
+    repo = 'game'
+    # delete_ghrepo(repo)
     # run('commit','-am','first commit')
     # delete_localrepo(path.join(home,repo))
-    # dlist = dwalk()
+    dlist = dwalk()
     # dlist.extend(addlist)
-    # localrepos(dlist)
+    localrepos(dlist)
     # print(dlist)
     # print(ghrepos())
 
 
 def localrepos(dlist):
     # print(type(dlist))
-    for repo in dlist:
+    for dir in dlist:
 
         # chdir(repo)
-        print(repo)
-        # repo = Repo(repo).git
+        print(dir+'\n')
+        repo = Repo(dir).git
         # result = repo.status()
-        # result = repo.pull()
+        result = repo.pull()
         # result=repo.diff()
-        # print(result)
+        print(result)
 
         # run('diff', '--summary')
         # run('diff')
@@ -64,15 +58,12 @@ def dwalk():
 
 def walklevel():
     num_sep = base_folder.count(path.sep)
-    # print('num sep', num_sep)
     for root, dirs, files in walk(base_folder):
         yield root, dirs, files
         dirs.sort()
         num_sep_this = root.count(path.sep)
-        # print('num sep this', num_sep_this)
         if num_sep + 1 <= num_sep_this:
             del dirs[:]
-        # print(dirs)
 
 
 def run(*args):

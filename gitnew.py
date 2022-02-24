@@ -1,37 +1,40 @@
 from os import makedirs
+import shutil
 from settings import *
 from os import chdir
 import subprocess
 from git import Repo
 import git
 
+
 def main():
-    # pass
+    pass
     # chdir(local_path)
     # new_localrepo()
     # str_ = new_ghrepo()
-    # clone()
+    # str_=clone()
 
+    # str_ = ch_workspace()
     # with open(workspace, 'w') as file_: file_.write(str_)
     # add_ignore()
     # str_ = new_ghrepo()
     # str_ = remote_addchange()
-    push_new()
+    # push_new()
+    # readme()
+    # print(str_)
 
 
 def new_ghrepo():
     new = g.get_user().create_repo(repo)
     return new
 
+
 def clone():
-    # print(url, local_path)
-    # print(local_path)
-    # subprocess.check_call(['git', 'clone', url, local_path])
     try:
         repo = Repo.clone_from(repo_url, local_path)
-        # return repo
+        return repo
     except git.exc.InvalidGitRepositoryError:
-        print('error')
+        print('error here')
 
 
 def new_localrepo():
@@ -42,14 +45,14 @@ def new_localrepo():
 def remote_addchange():
     chdir(local_path)
     subprocess.check_call(['git', 'remote', 'add', 'origin', repo_url])
-    # subprocess.check_call(['git', 'remote', 'set-url', 'origin', url])
     return subprocess.check_call(['git', 'remote', '-v'])
 
-def add_ignore():
-    exclude='node_modules\n.vscode\npackage-lock.json'
-    gitignore=path.join(local_path,'.gitignore')
-    with open(gitignore,'a+') as f:
-        f.write(exclude)
+
+def add_ignore_readme():
+    src = path.join(base_folder, 'ghtemplate', '.gitignore')
+    shutil.copy(src, local_path)
+    src = path.join(base_folder, 'ghtemplate', 'README.md')
+    shutil.copy(src, local_path)
 
 
 def push_new():
@@ -62,7 +65,7 @@ def ch_workspace():
     with open(workspace, 'r') as file_:
         # head = list(islice(file_, 8))
         for line in file_:
-            # print(line)
+            print(line)
             if 'folders' in line:
                 str_ += f'{line}{{\n"path": "{local_path}"\n}},'
                 continue
