@@ -3,25 +3,23 @@ from os import chdir, path, walk
 from settings import *
 from git import Repo
 
-# 'custom'
-excludedirs = ['.oh-my-zsh', 'gman', 'ghtemplate']
+excludedirs = ['.oh-my-zsh', 'apps', 'gman', 'ghtemplate']
 
 
 def main():
     # chdir(local_path)
-    repo = 'game'
-    # delete_ghrepo(repo)
     # run('commit','-am','first commit')
     # delete_localrepo(path.join(home,repo))
     dlist = dwalk()
     # dlist.extend(addlist)
-    localrepos(dlist)
+    print(localrepos(dlist))
     # print(dlist)
     # print(ghrepos())
 
 
 def localrepos(dlist):
     # print(type(dlist))
+    resultlist = []
     for dir in dlist:
 
         # chdir(repo)
@@ -29,14 +27,16 @@ def localrepos(dlist):
         repo = Repo(dir).git
         # result = repo.status()
         result = repo.pull()
+        # print(result)
         # result=repo.diff()
-        print(result)
+        resultlist.append(result)
 
         # run('diff', '--summary')
         # run('diff')
         # | grep --color "mode change 100644 => 100755"'
         # commit(repo)
-    return 0
+    return resultlist
+    # return list(enumerate(resultlist))
 
 
 def ghrepos():
@@ -57,8 +57,8 @@ def dwalk():
 
 
 def walklevel():
-    num_sep = base_folder.count(path.sep)
-    for root, dirs, files in walk(base_folder):
+    num_sep = home_folder.count(path.sep)
+    for root, dirs, files in walk(home_folder):
         yield root, dirs, files
         dirs.sort()
         num_sep_this = root.count(path.sep)

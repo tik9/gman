@@ -18,8 +18,9 @@ def main():
     # with open(workspace, 'w') as file_: file_.write(str_)
     # add_ignore()
     # str_ = new_ghrepo()
-    # str_ = remote_addchange()
-    # push_new()
+    # str_ = remote_add()
+    # ignore_readme_add()
+    push_new()
     # readme()
     # print(str_)
 
@@ -29,29 +30,21 @@ def new_ghrepo():
     return new
 
 
-def clone():
-    try:
-        repo = Repo.clone_from(repo_url, local_path)
-        return repo
-    except git.exc.InvalidGitRepositoryError:
-        print('error here')
-
-
 def new_localrepo():
     makedirs(local_path, exist_ok=True)
-    repo = git.Repo.init(local_path)
+    git.Repo.init(local_path)
 
 
-def remote_addchange():
+def remote_add():
     chdir(local_path)
     subprocess.check_call(['git', 'remote', 'add', 'origin', repo_url])
     return subprocess.check_call(['git', 'remote', '-v'])
 
 
-def add_ignore_readme():
-    src = path.join(base_folder, 'ghtemplate', '.gitignore')
+def ignore_readme_add():
+    src = path.join(home_folder, 'ghtemplate', '.gitignore')
     shutil.copy(src, local_path)
-    src = path.join(base_folder, 'ghtemplate', 'README.md')
+    src = path.join(home_folder, 'ghtemplate', 'README.md')
     shutil.copy(src, local_path)
 
 
@@ -72,6 +65,13 @@ def ch_workspace():
             str_ += line
     return str_
 
+
+def clone():
+    try:
+        repo = Repo.clone_from(repo_url, local_path)
+        return repo
+    except git.exc.InvalidGitRepositoryError:
+        print('error here')
 
 if __name__ == "__main__":
     main()
