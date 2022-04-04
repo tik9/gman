@@ -1,5 +1,5 @@
 import subprocess
-from os import chdir, path, walk
+from os import path, walk
 from settings import *
 from git import Repo
 
@@ -8,35 +8,26 @@ excludedirs = ['.oh-my-zsh', 'apps', 'gman', 'ghtemplate']
 
 def main():
     # chdir(local_path)
-    # run('commit','-am','first commit')
-    # delete_localrepo(path.join(home,repo))
     dlist = dwalk()
     # dlist.extend(addlist)
-    print(localrepos(dlist))
-    # print(dlist)
-    # print(ghrepos())
+    print(ghrepos())
 
 
 def localrepos(dlist):
-    # print(type(dlist))
     resultlist = []
     for dir in dlist:
 
         # chdir(repo)
-        print(dir+'\n')
         repo = Repo(dir).git
-        # result = repo.status()
-        result = repo.pull()
-        # print(result)
+        result = repo.status()
+        # result = repo.pull()
         # result=repo.diff()
         resultlist.append(result)
 
         # run('diff', '--summary')
         # run('diff')
         # | grep --color "mode change 100644 => 100755"'
-        # commit(repo)
     return resultlist
-    # return list(enumerate(resultlist))
 
 
 def ghrepos():

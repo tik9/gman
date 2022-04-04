@@ -4,16 +4,18 @@ from github import Github
 import socket
 import sys
 
+home = str(Path.home())
+
 sysex = sys.executable
 
 hostname = socket.gethostname()
-home = str(Path.home())
 w_home = path.join('/', 'mnt', 'c', 'users', 'user')
 
 gm_folder = path.dirname(__file__)
 home_folder = path.dirname(gm_folder)
 
-repo = 'dstack'
+repo = 'php'
+repo = 'test-node'
 
 local_path = path.join(home_folder, repo)
 
@@ -25,7 +27,13 @@ user = path.join(home_folder, 'AppData/Roaming', user_code)
 
 with open(path.join(gm_folder, 'ghtoken'), 'r') as file_:
     token = file_.read()
-workspace = path.join(w_home, 'workspace.code-workspace')
+
+ws = 'workspace.code-workspace'
+workspace = path.join(home_folder, ws)
+
+if hostname == 'tik':
+    workspace = path.join(w_home, ws)
+
 if hostname == 't--pc':
     documents = path.join(home_folder, 'Dokumente')
     config = '.config'
@@ -37,4 +45,5 @@ if hostname == 't--pc':
 
 g = Github(token)
 pygh_user = g.get_user()
-# print(pygh_user)
+print(workspace)
+# with open(workspace,'r') as f: print(f.read())
