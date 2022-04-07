@@ -1,8 +1,9 @@
-from os import path
+from os import chdir, getcwd, path, walk
 from pathlib import Path
 from github import Github
 import socket
 import sys
+
 
 home = str(Path.home())
 
@@ -15,9 +16,11 @@ gm_folder = path.dirname(__file__)
 home_folder = path.dirname(gm_folder)
 
 repo = 'php'
-repo = 'test-node'
+repo = 'vscode'
 
-local_path = path.join(home_folder, repo)
+# local_path = path.join(home_folder, repo)
+local_path = path.join(home_folder, 'Library',
+                       'Application Support', 'Code/User')
 
 gh_url = 'git@github.com:tik9/'
 repo_url = path.join(gh_url, repo)
@@ -45,5 +48,4 @@ if hostname == 't--pc':
 
 g = Github(token)
 pygh_user = g.get_user()
-print(workspace)
-# with open(workspace,'r') as f: print(f.read())
+# print(next(walk('.'))[2])

@@ -14,13 +14,14 @@ def main():
     # str_=clone()
 
     # str_ = ch_workspace()
-    # with open(workspace, 'w') as file_:file_.write(str_)
+    # with open(workspace, 'w') as file_:
+    #     file_.write(str_)
     # str_ = new_ghrepo()
     # str_ = remote_add()
     # ignore_readme_add()
     push_new()
 
-    # print(str_)
+    print(str_)
 
 
 def new_ghrepo():
@@ -45,6 +46,7 @@ def ignore_readme_add():
 
 
 def push_new():
+    chdir(local_path)
     run('add', '.')
     run('commit', '-am', 'first commit')
     run('push', '--set-upstream', 'origin', 'master')

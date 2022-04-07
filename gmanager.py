@@ -58,7 +58,7 @@ def walklevel():
 
 
 def run(*args):
-    return subprocess.check_call(['git'] + list(args))
+    return subprocess.Popen(['git'] + list(args))
 
 
 def delete_ghrepo(repo):
