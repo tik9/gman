@@ -8,10 +8,9 @@ from gmanager import run
 
 
 def main():
-    # pass
     # new_localrepo()
     # str_ = new_ghrepo()
-    # str_=clone()
+    str_=clone()
 
     # str_ = ch_workspace()
     # with open(workspace, 'w') as file_:
@@ -19,10 +18,17 @@ def main():
     # str_ = new_ghrepo()
     # str_ = remote_add()
     # ignore_readme_add()
-    push_new()
+    # push_new()
 
     print(str_)
+    pass
 
+def clone():
+    try:
+        repo = Repo.clone_from(repo_url, local_path)
+        return repo
+    except git.exc.InvalidGitRepositoryError:
+        print('error here')
 
 def new_ghrepo():
     new = g.get_user().create_repo(repo)
@@ -61,14 +67,6 @@ def ch_workspace():
                 continue
             str_ += line
     return str_
-
-
-def clone():
-    try:
-        repo = Repo.clone_from(repo_url, local_path)
-        return repo
-    except git.exc.InvalidGitRepositoryError:
-        print('error here')
 
 
 if __name__ == "__main__":

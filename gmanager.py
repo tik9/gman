@@ -8,9 +8,10 @@ excludedirs = ['.oh-my-zsh', 'apps', 'gman', 'ghtemplate']
 
 def main():
     # chdir(local_path)
-    dlist = dwalk()
+    # dlist = dwalk()
     # dlist.extend(addlist)
     print(ghrepos())
+    # delete_ghrepo()
 
 
 def localrepos(dlist):
@@ -61,9 +62,9 @@ def run(*args):
     return subprocess.Popen(['git'] + list(args))
 
 
-def delete_ghrepo(repo):
-    repo = pygh_user.get_repo(repo)
-    repo.delete()
+def delete_ghrepo():
+    ghrepo = pygh_user.get_repo(repo)
+    ghrepo.delete()
 
 
 if __name__ == '__main__':
