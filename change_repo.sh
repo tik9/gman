@@ -5,7 +5,8 @@ user=tik9
 base=https://api.github.com
 repo_api=$base/repos/$user
 all_repos=$base/users/$user/repos
-repo=fun
+repo=test-as
+# repo=tik
 
 function all_repo { curl -s $all_repos ;}
 
@@ -21,7 +22,7 @@ function get_description {
 }
 
 function ch_description {
-     description='Serverless functions on node js'
+     description='Serverless functions with react,node js'
      res=$(jq -n --arg name $repo --arg descr "$description" '{name:$name,description:$descr}')
      echo $res
 }

@@ -3,8 +3,7 @@ from os import path, walk
 from settings import *
 from git import Repo
 
-excludedirs = ['.oh-my-zsh', 'apps', 'gman', 'ghtemplate']
-
+excludedirs = ['.oh-my-zsh', 'apps', 'gman']
 
 def main():
     # chdir(local_path)
@@ -63,8 +62,9 @@ def run(*args):
 
 
 def delete_ghrepo():
-    ghrepo = pygh_user.get_repo(repo)
-    ghrepo.delete()
+    for repo in repos:
+        ghrepo = pygh_user.get_repo(repo)
+        # ghrepo.delete()
 
 
 if __name__ == '__main__':
